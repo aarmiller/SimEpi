@@ -9,12 +9,183 @@ This document provides an outline of the topics, scripts and associated
 readings that will be covered as we move through the class. Note: this
 document will continue to be updated as week move through the class.
 
-## Day 1 - 1/26/2021
+# Part 1 - Programming in R
 
-Topics Covered
+## Day 1 - Tuesday 1/26
+
+**Topics Covered**
 
 -   Overview of course
 
 -   Intro to simulation slides
 
--   Basics of R script
+-   Review of R basics (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/basics.R))
+
+**Supplementary Readings:**
+
+-   R4DS - Chapters [1](https://r4ds.had.co.nz/introduction.html),
+    [2](https://r4ds.had.co.nz/explore-intro.html),
+    [4](https://r4ds.had.co.nz/workflow-basics.html),
+    [6](https://r4ds.had.co.nz/workflow-scripts.html),
+    [7](https://r4ds.had.co.nz/exploratory-data-analysis.html)
+
+## Day 2 - Thursday 1/28
+
+**Topics Covered**
+
+-   Projects
+
+-   R objects
+
+-   Data types and structures
+
+-   Subsetting
+
+-   Data Import
+
+**Supplementary Readings**
+
+-   R4DS - Chapters [8](https://r4ds.had.co.nz/workflow-projects.html),
+    [10](https://r4ds.had.co.nz/tibbles.html)
+
+-   Efficient R Programming - Chapters
+    [5](https://csgillespie.github.io/efficientR/input-output.html),
+    6.1,
+    [6.2](https://csgillespie.github.io/efficientR/data-carpentry.html#efficient-data-frames-with-tibble)
+
+## Day 3 - Tuesday 2/2
+
+**Topics Covered**
+
+-   Data transformation with dplyr
+
+-   Lists
+
+-   Vectors
+
+-   Tibbles
+
+**Supplementary Readings**
+
+-   R4DS - Chapters [5](https://r4ds.had.co.nz/transform.html),
+    [18](https://r4ds.had.co.nz/pipes.html),
+    [20](https://r4ds.had.co.nz/vectors.html)
+
+-   Efficient R Programming - Chapter
+    [6.4](https://csgillespie.github.io/efficientR/data-carpentry.html#dplyr)
+
+## Day 4 - Thursday 2/4
+
+**Topics Covered**
+
+-   Data visualization with ggplot2
+
+-   Strings
+
+-   Factors
+
+-   Dates and Times
+
+**Supplementary Readings**
+
+-   R4DS - Chapters [3](https://r4ds.had.co.nz/data-visualisation.html),
+    [7](https://r4ds.had.co.nz/exploratory-data-analysis.html),
+    [14](https://r4ds.had.co.nz/strings.html),
+    [15](https://r4ds.had.co.nz/factors.html),
+    [16](https://r4ds.had.co.nz/dates-and-times.html)
+
+## Day 5 - Tuesday 2/9
+
+**Topics Covered**
+
+-   Tidy Data
+
+-   Relational Data
+
+-   Databases
+
+**Supplementary Readings**
+
+-   [Tidy Data](https://www.jstatsoft.org/article/view/v059i10) - by
+    Hadley Wickham
+
+-   R4DS - Chapters [12](https://r4ds.had.co.nz/tidy-data.html) and
+    [13](https://r4ds.had.co.nz/relational-data.html)
+
+-   Efficient R Programming - Chapters
+    [6.3](https://csgillespie.github.io/efficientR/data-carpentry.html#tidying-data-with-tidyr-and-regular-expressions)
+    and
+    [6.6](https://csgillespie.github.io/efficientR/data-carpentry.html#working-with-databases)
+
+## Day 6 - Thursday 2/11
+
+**Topics Covered**
+
+-   Random Number Generation
+
+**Supplementary Readings**
+
+-   
+
+## Day 7 - Tuesday 2/16
+
+**Topics Covered**
+
+-   Functions
+
+-   Iteration
+
+-   Purrr
+
+**Supplementary Readings**
+
+-   R4DS - Chapters [19](https://r4ds.had.co.nz/functions.html) and
+    [21](https://r4ds.had.co.nz/iteration.html)
+
+## Day 8 - Thursday 2/18
+
+**Topics Covered**
+
+-   Monte Carlo Methods
+
+**Supplementary Readings**
+
+-   Efficient R Programming - Chapter
+    [3.2](https://csgillespie.github.io/efficientR/programming.html#general)
+
+## Day 9 - Tuesday 2/23
+
+**Topics Covered**
+
+-   Writing a Basic Simulation
+
+**Supplementary Readings**
+
+-   
+
+## Day 10 - Thursday 2/25
+
+**Topics Covered**
+
+-   Optimization and Efficient Coding
+
+**Supplementary Readings**
+
+-   Efficient R Programming - Chapters
+    [3](https://csgillespie.github.io/efficientR/programming.html#general)
+    and [7](https://csgillespie.github.io/efficientR/performance.html)
+
+## Day 11 - Tuesday 3/2
+
+**(No Class)**
+
+## Day 12 - Thursday 3/4
+
+**Topics Covered**
+
+-   Parallelization
+
+-   High Performance Computing (HPC)
+
+# Part 2 - Resampling and Data Generation Appproaches
