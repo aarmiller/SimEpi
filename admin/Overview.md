@@ -27,8 +27,7 @@ document will continue to be updated as week move through the class.
 -   R4DS - Chapters [1](https://r4ds.had.co.nz/introduction.html),
     [2](https://r4ds.had.co.nz/explore-intro.html),
     [4](https://r4ds.had.co.nz/workflow-basics.html),
-    [6](https://r4ds.had.co.nz/workflow-scripts.html),
-    [7](https://r4ds.had.co.nz/exploratory-data-analysis.html)
+    [6](https://r4ds.had.co.nz/workflow-scripts.html)
 
 ## Day 2 - Thursday 1/28
 
