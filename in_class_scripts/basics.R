@@ -17,6 +17,8 @@
 #### Using R as a calculator ####
 #################################
 
+# Note: keyboard shortcut
+
 
 ###########################
 #### Object assignment ####
@@ -28,22 +30,32 @@
 
 # Illegal Names
 
+# Copy on modify - R is "lazy"
+
 
 #########################################
 #### Workspace and working directory ####
 #########################################
 
+# summarizing workspace
+
 # clearing objects
 
 # clearing all objects
+
+# locating or setting the working directory
 
 ############################################
 #### Very Basic Data Types & Structures ####
 ############################################
 
+# checking object type/class
+
 # basic data types
 
-#vector
+# vector
+
+# vectorized operations
 
 # list
 
@@ -70,7 +82,7 @@
 #### installing packages ####
 #############################
 
-#installing packages
+# installing packages
 
 # updating packages
 
@@ -85,6 +97,13 @@
 #### Logical Operations ####
 ############################
 
+# and/or
+
+# is. functions
+
+# vectorized logic
+
+# Basic conditional statements
 
 
 ###########################
@@ -97,6 +116,6 @@
 ####################
 
 
-# examples
+# Example in help files
 
 
