@@ -3,7 +3,8 @@
 install.packages("tidyverse")
 
 ## or we can install packages from a vector of names
-list_of_packages <- c("microbenchmark","deSolve","rootSolve","Rcpp","EpiModel","statnetWeb","tidymodels","keras","caret")
+list_of_packages <- c("microbenchmark","deSolve","rootSolve","Rcpp","EpiModel",
+                      "lobstr","statnetWeb","tidymodels","keras","caret")
 
 install.packages(list_of_packages,dependencies = TRUE)
 
