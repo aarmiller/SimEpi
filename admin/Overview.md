@@ -7,7 +7,7 @@ Aaron Miller
 
 This document provides an outline of the topics, scripts and associated
 readings that will be covered as we move through the class. Note: this
-document will continue to be updated as week move through the class.
+document will be continually updated (check back frequently).
 
 # Part 1 - Programming in R
 

@@ -4,7 +4,7 @@
 #### Some starting points ####
 
 # See Chapters 4,6 of R4DS
-
+# 
 
 ##################################
 #### R scripts and commenting ####
