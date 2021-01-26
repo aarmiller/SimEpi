@@ -41,3 +41,6 @@ vignettes/*.pdf
 # R project
 SimEpi.Rproj
 
+# Markdown documents
+*.Rmd
+
