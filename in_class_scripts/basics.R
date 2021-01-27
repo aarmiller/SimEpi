@@ -415,3 +415,9 @@ xm <- mean(x)
 c(xm, mean(x, trim = 0.1))
 
 
+###########################
+#### Sourceing Scripts ####
+###########################
+
+source("R/SimEpi/admin/install_packages.R")
+
