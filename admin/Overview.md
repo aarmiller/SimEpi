@@ -1,7 +1,12 @@
-Course Outline
-================
-Aaron Miller
-1/25/2021
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Course Outline
+
+Aaron Miller 1/25/2021
 
 ## Course Outline
 
@@ -19,9 +24,6 @@ document will be continually updated (check back frequently).
 
 -   Intro to simulation slides
 
--   Review of R basics (script
-    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/basics.R))
-
 **Supplementary Readings:**
 
 -   R4DS - Chapters [1](https://r4ds.had.co.nz/introduction.html),
@@ -35,18 +37,20 @@ document will be continually updated (check back frequently).
 
 -   Projects
 
--   R objects
+-   Review of R basics (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/basics.R))
 
--   Data types and structures
+-   Data types and structures (script here)
 
--   Subsetting
+    -   How data is stored by R
 
--   Data Import
+    -   More on Vectors, Lists and Data Frames
+
+-   Subsetting in base R
 
 **Supplementary Readings**
 
--   R4DS - Chapters [8](https://r4ds.had.co.nz/workflow-projects.html),
-    [10](https://r4ds.had.co.nz/tibbles.html)
+-   R4DS - Chapters [8](https://r4ds.had.co.nz/workflow-projects.html)
 
 -   Efficient R Programming - Chapters
     [5](https://csgillespie.github.io/efficientR/input-output.html),
@@ -57,17 +61,25 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
+-   Data Import
+
+```{=html}
+<!-- -->
+```
 -   Data transformation with dplyr
 
--   Lists
+-   Dplyr operations for...
 
--   Vectors
+    -   Tibbles
 
--   Tibbles
+    -   Lists
+
+    -   Vectors
 
 **Supplementary Readings**
 
 -   R4DS - Chapters [5](https://r4ds.had.co.nz/transform.html),
+    [10](https://r4ds.had.co.nz/tibbles.html),
     [18](https://r4ds.had.co.nz/pipes.html),
     [20](https://r4ds.had.co.nz/vectors.html)
 
