@@ -35,7 +35,8 @@ document will be continually updated (check back frequently).
 -   Review of R basics (script
     [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/basics.R))
 
--   Data types and structures (script here)
+-   Data types and structures (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/data_types_objects_subsetting.R))
 
     -   How data is stored by R
 
