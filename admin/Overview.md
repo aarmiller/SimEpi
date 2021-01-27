@@ -1,12 +1,7 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
-# Course Outline
-
-Aaron Miller 1/25/2021
+Course Outline
+================
+Aaron Miller
+1/25/2021
 
 ## Course Outline
 
@@ -50,7 +45,8 @@ document will be continually updated (check back frequently).
 
 **Supplementary Readings**
 
--   R4DS - Chapters [8](https://r4ds.had.co.nz/workflow-projects.html)
+-   R4DS - Chapters [8](https://r4ds.had.co.nz/workflow-projects.html),
+    [10](https://r4ds.had.co.nz/tibbles.html)
 
 -   Efficient R Programming - Chapters
     [5](https://csgillespie.github.io/efficientR/input-output.html),
@@ -61,14 +57,11 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Data Import
+-   Data import
 
-```{=html}
-<!-- -->
-```
 -   Data transformation with dplyr
 
--   Dplyr operations for...
+-   Dplyr operations for…
 
     -   Tibbles
 

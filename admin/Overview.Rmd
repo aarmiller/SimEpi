@@ -23,8 +23,6 @@ This document provides an outline of the topics, scripts and associated readings
 
 -   Intro to simulation slides
 
--   Review of R basics (script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/basics.R))
-
 **Supplementary Readings:**
 
 -   R4DS - Chapters [1](https://r4ds.had.co.nz/introduction.html), [2](https://r4ds.had.co.nz/explore-intro.html), [4](https://r4ds.had.co.nz/workflow-basics.html), [6](https://r4ds.had.co.nz/workflow-scripts.html)
@@ -35,13 +33,15 @@ This document provides an outline of the topics, scripts and associated readings
 
 -   Projects
 
--   R objects
+-   Review of R basics (script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/basics.R))
 
--   Data types and structures
+-   Data types and structures (script here)
 
--   Subsetting
+    -   How data is stored by R
 
--   Data Import
+    -   More on Vectors, Lists and Data Frames
+
+-   Subsetting in base R
 
 **Supplementary Readings**
 
@@ -53,17 +53,21 @@ This document provides an outline of the topics, scripts and associated readings
 
 **Topics Covered**
 
+-   Data import
+
 -   Data transformation with dplyr
 
--   Lists
+-   Dplyr operations for…
 
--   Vectors
+    -   Tibbles
 
--   Tibbles
+    -   Lists
+
+    -   Vectors
 
 **Supplementary Readings**
 
--   R4DS - Chapters [5](https://r4ds.had.co.nz/transform.html), [18](https://r4ds.had.co.nz/pipes.html), [20](https://r4ds.had.co.nz/vectors.html)
+-   R4DS - Chapters [5](https://r4ds.had.co.nz/transform.html), [10](https://r4ds.had.co.nz/tibbles.html), [18](https://r4ds.had.co.nz/pipes.html), [20](https://r4ds.had.co.nz/vectors.html)
 
 -   Efficient R Programming - Chapter [6.4](https://csgillespie.github.io/efficientR/data-carpentry.html#dplyr)
 
