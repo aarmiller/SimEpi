@@ -1,6 +1,6 @@
 
 # This script contains examples for a basic review of R
-
+library(lobstr)
 # See Chapters 1,2,4,6 of R4DS for additional details
 
 ##################################
@@ -232,6 +232,7 @@ vec1 <- c(1,2,3,4)
 
 # or with : colon/sequence operator
 vec2 <- 10:30
+30:10
 
 # or other functions
 seq(from = 100, to = 1000, by = 30)
@@ -344,7 +345,7 @@ TRUE & FALSE
 TRUE | FALSE
 
 # in
-1 %in% c(1,2,3,4)
+5 %in% c(1,2,3,4)
 
 # is. functions
 is.integer(1L)

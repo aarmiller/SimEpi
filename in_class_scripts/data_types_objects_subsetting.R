@@ -13,12 +13,14 @@ library(lobstr)
 ## Creating 4 Basic Types ------------------------------------------------------
 
 # "scalars" are created as....but these aren't really scalars...
+# Logical
 T
 F
 TRUE
 FALSE
 as.logical(0L)
 as.logical(1L)
+as.logical(3L)
 
 # Doubles created with
 0.1332
