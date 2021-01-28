@@ -12,7 +12,7 @@ library(lobstr)
 
 ## Creating 4 Basic Types ------------------------------------------------------
 
-# scalers are created as
+# "scalars" are created as....but these aren't really scalars...
 T
 F
 TRUE
@@ -79,25 +79,29 @@ typeof(4L)
 ?class()
 ?typeof()
 
-## What is going on here?
-
+## What is going on here in the following chunks of code? (Something does not add
+## up correctly?)
 1 + 2 == 3
 (1 + 2)/10 == .3
 .1 + .2 == .3
 
 seq(0, 1, by=.1)
-seq(0, 1, by=.1)[4] == .3
+seq(0, 1, by=.1) == .3
 
 x <- sqrt(2) ^ 2
 x
-x - 2
+x == 2
 
+# What the true numbers look like
 print(.1, digits=20)
 print(.2, digits=20)
 print(.1+.2, digits=20)
 print(.3, digits=20)
 
-#### floating point arithmetic & data storage
+# Problem 1: Weird Behavior
+sqrt(2) ^ 2 == 2
+
+## floating point arithmetic & data storage ------------------------------------
 
 # how integers are stored on a computer (bits)
 
@@ -108,26 +112,11 @@ a <- 4L
 b <- as.numeric(intToBits(a))
 
 sum(b*2^(0:31))
+# 0*2^0 + 0*2^1 + 1*2^2 + 0*2^3 + ... + 0*2^31
 
-# What is a floating point number?
-# floating point representation - How to represent real numbers in computer
-
-# Sign 
-s = 0
-# Exponent
-e = -3
-# significand
-sig = 1+2^(-2)
-
-# (-1)*sign+significad*2^exponent
-
-(-1)^s*sig*2^e
-
-
-
-
-## Integer overflow 
-a <- .Machine$integer.max
+## Problem 2: Integer overflow
+#a <- .Machine$integer.max
+a <- 2147483647L
 typeof(a)
 typeof(a+1)
 
@@ -140,8 +129,23 @@ b
 
 # Now we can go all the way up to 9,223,372,036,854,775,295
 as.integer64(9223372036854775295)
+as.integer64(9223372036854775296)
 
-# arithmetic underflow
+# How real numbers are stored in a computer...
+# What is a floating point number? 
+# floating point representation - How to represent real numbers in computer
+
+# Sign 
+s = 0
+# Exponent
+e = -3
+# significand
+sig = 1+2^(-2)
+
+# (-1)*sign+significad*2^exponent
+(-1)^s*sig*2^e
+
+## Problem 3: arithmetic underflow
 
 a <- rep(0.01,times=1000)
 b <- rep(0.01,times=10000)
@@ -182,18 +186,14 @@ attributes(b)
 ## Others ----------------------------------------------------------------------
 
 # Null
-class(NULL) # NULL
+class(NULL) 
+typeof(NULL)
 
 # Note NA is not a class but assumes what object it is contained in
 
 typeof(NA) # missing...logical?
 typeof(as.integer(NA))
-
-
-a <- NA
-typeof(a)
-a <- as.numeric(a)
-typeof(a)
+typeof(as.numeric(NA))
 
 # special doubles
 typeof(NaN)
@@ -212,26 +212,22 @@ is.finite(Inf)
 ## Other special values
 
 1e308 * 10
-
 1e308 * -10
-
 0/0
-
 Inf - Inf
 
-# efficiancy of object sizes
+# efficiency of object sizes, 
 a <- c(1,2,3)
 b <- c(1L,2L,3L)
+d <- c("1","2","3")
 object.size(a)
 object.size(b)
+object.size(d)
 
 b <- seq(from=1, to=1000000)
 a <- as.numeric(b)
 object.size(a)
 object.size(b)
-
-a <- rep(letters,each=100)
-
 
 ###################################
 #### Data Structures - Vectors ####
@@ -255,18 +251,22 @@ rep(c("a","b"), each = 3)
 c(c(1,2),c(3,4))
 
 ## Vectors have 2 main properties
-
+letters
 # type
 typeof(letters)
 # length
 length(letters)
 
-# type preference Int -> Numeric -> Character
-a <- c(1L,2L)
-b <- c(a,3)
-c <- c(b,"help")
+# type preference Logical -> Int -> Numeric -> Character
+a <- c(TRUE,FALSE)
+b <- c(a,3L)
+c <- c(b,5)
+d <- c(c,"help")
 
+typeof(a)
+typeof(b)
 typeof(c)
+typeof(d)
 
 # testing and coercion
 
@@ -289,7 +289,7 @@ c(1,2,3,4,NA)
 as.integer(c(1,2,3,4,NA))
 as.character(c(1,2,3,4,NA))
 
-# first notice how 
+# first notice how NA behaves
 NA > 5
 10 * NA
 !NA
@@ -305,8 +305,8 @@ is.na(x1)
 is.na(x2)
 
 mean(x1)
-mean(x2,na.rm = T)
 mean(x2)
+mean(x2,na.rm = T)
 
 ## Attributes of Vectors -------------------------------------------------------
 
@@ -334,7 +334,7 @@ attributes(a)
 ## Character Vectors -----------------------------------------------------------
 
 # R uses a global string pool
-# each unique string is only storred once
+# each unique string is only stored once
 
 a <- c("aaa","aab","aac")
 obj_size(a)
@@ -345,14 +345,11 @@ obj_size(b)
 
 x <- "This is a long series of characters"
 obj_size(x)
-
+# not what 1,000 times the size would be
 obj_size(x)*1000
 
 y <- rep(x,1000)
 obj_size(y)
-
-typeof(y)
-c(y[1],y[10])
 
 # special memory assignment of character vector
 x <- c("a", "a", "abc", "d","abc")
@@ -371,13 +368,16 @@ obj_size(y)
 
 z <- as.integer(seq(from=1, to=10000, by=1))
 obj_size(z)
+# quick digression (why did I have to use seq and not 1:10000)
+obj_size(1:10)
+obj_size(1:10000)
 
+# now notice the factor is the same size as the integer sequence plus the characters
 obj_size(state.name) + obj_size(z)
 
 # notice how information on factors is being stored as an attribute attached to
 # an integer vector
 attributes(y)
-class(y)
 typeof(y)
 
 # Note that we can easily see by converting to integer
@@ -386,20 +386,20 @@ head(as.integer(y),100)
 ## Why is this important to keep in mind???????
 
 # keep in mind what happens when we convert to factors
-z[1:10]
+y[1:10]
 
 # some functions will treat as integer
-c(z[1:10])
+c(y[1:10])
 
 # some will break
-nchar(z[1])
+nchar(y[1])
 
 
 ## Ordered Factors - factor values can be assigned an ordering
 # Re-ordering factors
-summary(z)
+summary(y)
 
-summary(fct_relevel(z,"Wyoming","New York"))
+summary(fct_relevel(y,"Wyoming","New York"))
 # Note....we will talk more about functions to
 # This will be most useful for printing and tables
 
@@ -408,10 +408,12 @@ summary(fct_relevel(z,"Wyoming","New York"))
 
 Sys.Date()
 
-a <- Sys.Date()+0:31
-typeof(a)
-as.numeric(a)
-attributes(a)
+a <- Sys.Date()
+b <- a + 0:31
+b
+typeof(b)
+as.numeric(b)
+attributes(b)
 
 
 ## Other characteristics of vectors --------------------------------------------
@@ -421,8 +423,20 @@ attributes(a)
 
 ## vectorized operations ------------------------------------------------------
 
-# Golden Rule of efficiency - 
+# Golden Rule of efficiency - "access the underlying C/Fortran routines as quickly as possible"
+#    - Efficient R Programming 3.2.2
 
+runif(10)
+runif(10) + 1
+
+# our first simulation - Law of Large Numbers (LLN)
+a <- runif(1000)
+b <- 1:1000
+c <- cumsum(a) / b 
+plot(b,c)
+
+# in one line
+plot(1:1000, cumsum(runif(1000)) / 1:1000)
 
 
 #################################

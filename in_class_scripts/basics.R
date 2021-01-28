@@ -75,7 +75,7 @@ x <- 2
 x <- 1
 
 # this works but is considered bad practice. Why?
-x=10
+x = 10
 
 # How does '=' differ in functions? 
 # (Note: runif() generates random uniform numbers)
