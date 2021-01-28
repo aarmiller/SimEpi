@@ -8,3 +8,5 @@ list_of_packages <- c("microbenchmark","deSolve","rootSolve","Rcpp","EpiModel",
 
 install.packages(list_of_packages,dependencies = TRUE)
 
+# remove the package list
+rm(list=list_of_packages

@@ -6,6 +6,9 @@ library(tidyverse)
 # make note of your working directory ------------------------------------------
 getwd()
 
+# install course packages
+source("R/SimEpi/admin/install_packages.R")
+
 ## Test path to function directory ---------------------------------------------
 # check that you can source functions from the correct directory
 source("R/SimEpi/functions/test_functions.R")
