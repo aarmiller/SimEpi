@@ -12,8 +12,9 @@ demonstration purposes; this allows researches to test our their
 analysis or code before applying it to actual data which is subject to
 numerous security restrictions.You can also find documentation and a
 variable codebook for the Medicare data on the ICON page. A template
-script to get you started on this assignment is posted here, on the
-course GitHub page.
+script to get you started on this assignment is posted
+[here](https://github.com/aarmiller/SimEpi/blob/main/assignments/week2_template.R),
+on the course GitHub page.
 
 We start by loading the following packages:
 
@@ -311,11 +312,11 @@ following:
     ## 10  2008    10    46      108052.      4.26
     ## # … with 26 more rows
 
-### Describe the Age and LOS for patients with AMI
+### Describe the age, LOS and payment for patients with AMI
 
-For the inpatient AMI admissions that you found, compute the mean age
-(at admission), mean length of stay, mean payment, and percent who were
-female. Your results should look like the following:
+For the inpatient AMI admissions that you found, compute the mean/median
+age (at admission), mean/median length of stay, mean/median payment, and
+percent who were female. Your results should look like the following:
 
     ## # A tibble: 1 x 6
     ##   median_age mean_age median_los mean_los mean_pay pct_female
