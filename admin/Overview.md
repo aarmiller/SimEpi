@@ -58,9 +58,11 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Data import
+-   Data import (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/data_import_export.R))
 
--   Data transformation with dplyr
+-   Data transformation with dplyr (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/data_transformation.R))
 
 -   Dplyr operations for…
 
