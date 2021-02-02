@@ -25,7 +25,7 @@ as.logical(3L)
 # Doubles created with
 0.1332
 1.23e5
-0xcafe
+0xcafe # This is a 
 NaN
 Inf
 -Inf
@@ -331,7 +331,7 @@ a <- c(a = 1, b = 2, c = 3)
 attr(a,"x") <- "abcdef"
 attr(a, "y") <- 4:6
 attributes(a)
-
+typeof(a)
 
 ## Character Vectors -----------------------------------------------------------
 
@@ -395,6 +395,8 @@ c(y[1:10])
 
 # some will break
 nchar(y[1])
+
+nchar("Alabama")
 
 
 ## Ordered Factors - factor values can be assigned an ordering

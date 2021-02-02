@@ -2,9 +2,20 @@ Week 2 Assignment - Explore the Synthetic Medicare Data
 ================
 Due 2/9/2021
 
-In this assignment you will load and explore the synthetic Medicare data
-posted on the course website. A template script to get you started on
-this assignment is posted here. You can find,
+In this assignment you will load and explore the Synthetic Medicare data
+posted on the course ICON site. This is a synthetic dataset meant to
+mimic actual Medicare data. Additional details on the dataset can be
+found
+[here](https://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF).
+This data is publicly available and can be used for trial and
+demonstration purposes; this allows researches to test our their
+analysis or code before applying it to actual data which is subject to
+numerous security restrictions.You can also find documentation and a
+variable codebook for the Medicare data on the ICON page. A template
+script to get you started on this assignment is posted here, on the
+course GitHub page.
+
+We start by loading the following packages:
 
 ``` r
 library(tidyverse)
@@ -14,21 +25,16 @@ library(lubridate)
 
 # Load Data
 
-For this assignment we will be working with the synthetic Medicare data.
-This data is a synthetic dataset meant to mimic actual Medicare data.
-Additional details on the dataset can be found here. This data is
-publicly available and can be used for trial and demonstration purposes;
-this allows researches to test our their analysis or code before
-applying it to actual data which is subject to numerous security
-restrictions.
-
 Start by loading the beneficiary summary data for 2008, 2009 and 2010
-along with the inpatient data. Read these in and store them as the
-objects named `bene_2008, bene_2009, bene_2010, inpatient`. **Note:** I
-have saved my data in my R project directory for this course under
-`"SimEpi2021/data/synthetic_medicare/sample1/"`.
+along with the inpatient data. Read these datasets in and store them as
+the objects named `bene_2008, bene_2009, bene_2010, inpatient`.
+**Note:** I have saved my data in my R project directory for this course
+under `"SimEpi2021/data/synthetic_medicare/sample1/"`.
 
 ## Process the data
+
+Next process the data (clean and modify) so that it is easier to work
+with.
 
 #### Beneficiary Data
 
@@ -36,9 +42,10 @@ Create a dataset that contains some of the basic immutable
 characteristics of the beneficiaries across all three years of data.
 Start by combining (stacking) the three years of beneficiary data. Next,
 create a dataset that contains the beneficiary id, sex, race, date of
-birth, and state code. Name these variables as:
+birth, and state code. Change the names of these variables so they are
+easier to understand. Name these variables as:
 `bene_id, sex, race, dob, state`. Finally, reduce the dataset down to
-just the distinct/unique beneficiary (note: many beneficiaries are
+just the distinct/unique beneficiaries (note: most beneficiaries are
 present in multiple years).
 
 Your dataset should look like the following, and you should have 116,352
@@ -66,7 +73,7 @@ abbreviations corresponding to their numeric categories. The dataset
 “state\_values.csv” contains values for states and their abbreviations.
 Third, using the `ymd()` function from the `lubridate` package convert
 the `dob` variable to a date (try running `ymd(19230501)` to see how
-this works.
+this works.)
 
 Once you have completed these steps, your `bene_info` data should then
 look like the following:
@@ -112,8 +119,8 @@ Your inpatient dataset should look like the following:
     ## # … with 66,763 more rows
 
 Now clean up the data a bit by doing the following. First, create a
-length of stary variable named `los` that gives the amount of time the
-patient stayed in the hospital. Second, convert the admission and
+length of stary (LOS) variable named `los` that gives the amount of time
+the patient stayed in the hospital. Second, convert the admission and
 discharge dates to dates using the `ymd()` function. After completing
 these steps your dataset should look like the following:
 
@@ -138,7 +145,7 @@ these steps your dataset should look like the following:
 
 Summarize the breakdown of the beneficiaries by sex and race. Compute
 both the count breakdown and the fraction of beneficiaries that fall
-into each category. Note: your data should look something like this.
+into each category. Note: your data should look something like this:
 
     ## # A tibble: 8 x 4
     ##   sex    race         n   pct
@@ -152,9 +159,9 @@ into each category. Note: your data should look something like this.
     ## 7 Male   other     2282  1.96
     ## 8 Male   hispanic  1257  1.08
 
-Using this above result, try to generate the following table that gives
-a population breakdown by race and sex. Note: this might take a few
-steps using the current functions we have covered (later we will discuss
+Using the above result, try to generate the following table that gives a
+population breakdown by race and sex. Note: this might take a few steps
+using the current functions we have covered (later we will discuss
 reshaping that will make this easier).
 
     ## # A tibble: 4 x 3
@@ -194,7 +201,8 @@ like this:
     ## 2 WI          58.8
 
 Now try to do the exact same thing but using only a single filter
-statement (note you will need to incorporate a max and min value)
+statement instead of arrange (note you will need to incorporate a max
+and min statement).
 
     ## # A tibble: 2 x 2
     ##   state female_pct
@@ -205,8 +213,9 @@ statement (note you will need to incorporate a max and min value)
 ### Find inpatient visits for AMI
 
 Find all inpatient visits with a primary diagnosis of Acute Myocardial
-Infarction using the icd codes “410.XX”. The `children()` function in
-the icd package can be used to expand upon a series of codes.
+Infarction (AMI) using the ICD-9-CM codes “410.XX”. The `children()`
+function in the `icd` package can be used to expand upon a series of
+codes.
 
 ``` r
 ami_codes <- children("410")
@@ -236,7 +245,7 @@ denominator corresponding to the number of beneficiaries we can observe
 each month. Finally, we will compute an incidence rate per 10,000
 beneficiaries.
 
-Let’s start by computing the number of ami cases each month (for the
+Let’s start by computing the number of AMI cases each month (for the
 three different years of data we have). You will likely want to use the
 `month()` and `year()` functions from the `lubridate` package to extract
 the year. You should then get a year and month count of AMI cases that
@@ -313,11 +322,11 @@ female. Your results should look like the following:
     ##        <dbl>    <dbl>      <dbl>    <dbl>    <dbl>      <dbl>
     ## 1         75     74.3          4     158.   13770.      0.563
 
-Now how does this compare to the inpatient admissions that did not have
-an AMI? For the non-AMI patients you should exclude patients where AMI
-was either the admitting diagnosis or the principal diagnosis. Start by
+How does this compare to the inpatient admissions that did not have an
+AMI? For the non-AMI patients you should exclude patients where AMI was
+either the admitting diagnosis or the principal diagnosis. Start by
 finding all inpatient admissions without AMI then use the same commands
-as did above.
+as you did above.
 
     ## # A tibble: 1 x 6
     ##   median_age mean_age median_los mean_los mean_pay pct_female
@@ -326,16 +335,17 @@ as did above.
 
 ### Build a matched case-control study sample
 
-Suppose we want to conduct a study comparing cases of AMI to individuals
-who did not have an AMI. Our strategy is to build a matched case-control
-using a 1:1 match where each patient who had an AMI is matched to a
-patient that did not have an AMI.
+Suppose we want to conduct a study comparing individuals with an AMI to
+individuals who did not have an AMI. Our strategy is to build a matched
+case-control using a 1:1 match where each patient who had an AMI is
+matched to a patient that did not have an AMI.
 
 In this simple example we will match cases based on age, dob year and
-race. Let’s start by computing the number of matches we need to generate
-in each strata. To do so count how many ami cases we have for each
-corresponding sex, dob year and race. I will store this as an object
-`match_strata`
+race. We will also ignore the randomization step for now (we will return
+to this later). Let’s start by computing the number of matches we need
+to generate in each strata. To do so count how many AMI cases we have
+for each corresponding sex, dob year and race. I will store this as an
+object called `match_strata`.
 
     ## # A tibble: 196 x 4
     ##    sex    dobyr race         n
@@ -353,9 +363,9 @@ corresponding sex, dob year and race. I will store this as an object
     ## # … with 186 more rows
 
 Next identify the set of enrollees that did not have an AMI. To do so,
-go back and find all patients that had AMI as the admitting or principal
-diagnosis. Note this should give you 1,976 beneficiaries with the
-following bene\_id’s:
+go back and find all patients that had AMI as either the admitting or
+principal diagnosis. Note this should give you 1,976 beneficiaries with
+the following `bene_id`’s:
 
     ## # A tibble: 1,976 x 1
     ##    bene_id         
@@ -413,7 +423,3 @@ like the following:
     ##  9 0DEE5ED80C23B601 Male    1909 white          5     5
     ## 10 0152D6726F90EFCF Female  1910 white          1     1
     ## # … with 741 more rows
-
-# Plot Some Trends
-
-(Coming Soon)
