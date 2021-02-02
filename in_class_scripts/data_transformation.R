@@ -90,12 +90,12 @@ arrange()
 # arrange helper function
 desc()
 
-## Group By --------------------------------------------------------------------
-group_by()
-
 ## Summarize -------------------------------------------------------------------
 summarize()
 summarise()
+
+## Group By --------------------------------------------------------------------
+group_by()
 
 # shortcut for grouped counting
 count()
