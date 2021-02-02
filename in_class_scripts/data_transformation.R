@@ -1,6 +1,7 @@
 
 # This script covers basi data transformation using dplyr
 
+# Dplyr cheatsheet: https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
 
 library(tidyverse)
 
