@@ -1,1 +1,1 @@
-Example of a change
+For each week I will post a markdown document (.md) and a template script (.R). The markdown document will provide specific details of the assignment (including output examples and resource links to complete the assigment). The template script is what you will submit and where you should enter your code.
