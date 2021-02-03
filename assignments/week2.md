@@ -119,25 +119,25 @@ Your inpatient dataset should look like the following:
     ## 10 0007F12A492FD25D 196831176966961   29000 20100616 20100619 99641  7366 
     ## # … with 66,763 more rows
 
-Now clean up the data a bit by doing the following. First, create a
-length of stary (LOS) variable named `los` that gives the amount of time
-the patient stayed in the hospital. Second, convert the admission and
-discharge dates to dates using the `ymd()` function. After completing
+Now clean up the data a bit by doing the following. First, convert the
+admission and discharge dates to dates using the `ymd()` function.
+Second, create a length of stary (LOS) variable named `los` that gives
+the amount of time the patient stayed in the hospital. After completing
 these steps your dataset should look like the following:
 
     ## # A tibble: 66,773 x 8
-    ##    bene_id        claim_id      payment adm_date   dis_date   adm_dx dx1     los
-    ##    <chr>          <chr>           <dbl> <date>     <date>     <chr>  <chr> <dbl>
-    ##  1 00013D2EFD8E4… 196661176988…    4000 2010-03-12 2010-03-13 4580   7802      1
-    ##  2 00016F7458628… 196201177000…   26000 2009-04-12 2009-04-18 7866   1970      6
-    ##  3 00016F7458628… 196661177015…    5000 2009-08-31 2009-09-02 6186   6186     71
-    ##  4 00016F7458628… 196091176981…    5000 2009-09-17 2009-09-20 29590  29623     3
-    ##  5 00016F7458628… 196261176983…   16000 2010-06-26 2010-07-01 5849   3569     75
-    ##  6 00052705243EA… 196991176971…   14000 2008-09-12 2008-09-12 78079  486       0
-    ##  7 0007F12A492FD… 196661176963…    5000 2008-09-19 2008-09-22 78097  33811     3
-    ##  8 0007F12A492FD… 196821177025…    5000 2010-06-02 2010-06-06 49392  49121     4
-    ##  9 0007F12A492FD… 196551177025…   14000 2010-05-22 2010-06-12 V5789  V5789    90
-    ## 10 0007F12A492FD… 196831176966…   29000 2010-06-16 2010-06-19 99641  7366      3
+    ##    bene_id       claim_id      payment adm_date   dis_date   adm_dx dx1   los   
+    ##    <chr>         <chr>           <dbl> <date>     <date>     <chr>  <chr> <drtn>
+    ##  1 00013D2EFD8E… 196661176988…    4000 2010-03-12 2010-03-13 4580   7802   1 da…
+    ##  2 00016F745862… 196201177000…   26000 2009-04-12 2009-04-18 7866   1970   6 da…
+    ##  3 00016F745862… 196661177015…    5000 2009-08-31 2009-09-02 6186   6186   2 da…
+    ##  4 00016F745862… 196091176981…    5000 2009-09-17 2009-09-20 29590  29623  3 da…
+    ##  5 00016F745862… 196261176983…   16000 2010-06-26 2010-07-01 5849   3569   5 da…
+    ##  6 00052705243E… 196991176971…   14000 2008-09-12 2008-09-12 78079  486    0 da…
+    ##  7 0007F12A492F… 196661176963…    5000 2008-09-19 2008-09-22 78097  33811  3 da…
+    ##  8 0007F12A492F… 196821177025…    5000 2010-06-02 2010-06-06 49392  49121  4 da…
+    ##  9 0007F12A492F… 196551177025…   14000 2010-05-22 2010-06-12 V5789  V5789 21 da…
+    ## 10 0007F12A492F… 196831176966…   29000 2010-06-16 2010-06-19 99641  7366   3 da…
     ## # … with 66,763 more rows
 
 # Some Basic Analysis
@@ -218,23 +218,19 @@ Infarction (AMI) using the ICD-9-CM codes “410.XX”. The `children()`
 function in the `icd` package can be used to expand upon a series of
 codes.
 
-``` r
-ami_codes <- children("410")
-```
-
     ## # A tibble: 751 x 8
-    ##    bene_id        claim_id      payment adm_date   dis_date   adm_dx dx1     los
-    ##    <chr>          <chr>           <dbl> <date>     <date>     <chr>  <chr> <dbl>
-    ##  1 00DA910E42BA3… 196601176968…   18000 2009-09-05 2009-09-15 41071  4280     10
-    ##  2 0109DE95C1C45… 196481177021…    6000 2010-05-27 2010-05-30 41091  41051     3
-    ##  3 0124E58C3460D… 196131176983…    6000 2010-01-09 2010-01-12 41071  41071     3
-    ##  4 0133AD95B7A96… 196321177025…    5000 2008-12-08 2008-12-10 41071  41091     2
-    ##  5 0137BBB5B93D6… 196941177004…   16000 2009-11-13 2009-11-15 41011  41401     2
-    ##  6 01B99FF2F1121… 196531176990…    5000 2008-08-26 2008-08-27 41071  41071     1
-    ##  7 022C7819395BE… 196251176978…    2000 2008-02-24 2008-02-25 41071  7295      1
-    ##  8 0289ABA0311E4… 196011176959…   57000 2009-08-01 2009-08-15 41071  3962     14
-    ##  9 02C96D4BAA0EF… 196191177004…   13000 2008-10-02 2008-10-08 41071  99672     6
-    ## 10 02E24F70DEF07… 196171177010…    3000 2008-01-25 2008-01-31 41090  5849      6
+    ##    bene_id       claim_id      payment adm_date   dis_date   adm_dx dx1   los   
+    ##    <chr>         <chr>           <dbl> <date>     <date>     <chr>  <chr> <drtn>
+    ##  1 00DA910E42BA… 196601176968…   18000 2009-09-05 2009-09-15 41071  4280  10 da…
+    ##  2 0109DE95C1C4… 196481177021…    6000 2010-05-27 2010-05-30 41091  41051  3 da…
+    ##  3 0124E58C3460… 196131176983…    6000 2010-01-09 2010-01-12 41071  41071  3 da…
+    ##  4 0133AD95B7A9… 196321177025…    5000 2008-12-08 2008-12-10 41071  41091  2 da…
+    ##  5 0137BBB5B93D… 196941177004…   16000 2009-11-13 2009-11-15 41011  41401  2 da…
+    ##  6 01B99FF2F112… 196531176990…    5000 2008-08-26 2008-08-27 41071  41071  1 da…
+    ##  7 022C7819395B… 196251176978…    2000 2008-02-24 2008-02-25 41071  7295   1 da…
+    ##  8 0289ABA0311E… 196011176959…   57000 2009-08-01 2009-08-15 41071  3962  14 da…
+    ##  9 02C96D4BAA0E… 196191177004…   13000 2008-10-02 2008-10-08 41071  99672  6 da…
+    ## 10 02E24F70DEF0… 196171177010…    3000 2008-01-25 2008-01-31 41090  5849   6 da…
     ## # … with 741 more rows
 
 ### Compute the monthly incidence of AMI admissions
@@ -319,9 +315,9 @@ age (at admission), mean/median length of stay, mean/median payment, and
 percent who were female. Your results should look like the following:
 
     ## # A tibble: 1 x 6
-    ##   median_age mean_age median_los mean_los mean_pay pct_female
-    ##        <dbl>    <dbl>      <dbl>    <dbl>    <dbl>      <dbl>
-    ## 1         75     74.3          4     158.   13770.      0.563
+    ##   median_age mean_age median_los mean_los      mean_pay pct_female
+    ##        <dbl>    <dbl> <drtn>     <drtn>           <dbl>      <dbl>
+    ## 1         75     74.3 4 days     5.286285 days   13770.      0.563
 
 How does this compare to the inpatient admissions that did not have an
 AMI? For the non-AMI patients you should exclude patients where AMI was
@@ -330,9 +326,9 @@ finding all inpatient admissions without AMI then use the same commands
 as you did above.
 
     ## # A tibble: 1 x 6
-    ##   median_age mean_age median_los mean_los mean_pay pct_female
-    ##        <dbl>    <dbl>      <dbl>    <dbl>    <dbl>      <dbl>
-    ## 1         75     73.7          4     149.    9446.      0.565
+    ##   median_age mean_age median_los mean_los     mean_pay pct_female
+    ##        <dbl>    <dbl> <drtn>     <drtn>          <dbl>      <dbl>
+    ## 1         75     73.7 4 days     5.72812 days    9446.      0.565
 
 ### Build a matched case-control study sample
 
