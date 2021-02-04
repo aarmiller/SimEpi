@@ -66,6 +66,9 @@ mtcars %>%
 #### Dplyr Verbs ####
 #####################
 
+## Load Data -------------------------------------------------------------------
+load("data/nhds/nhds_same_day.RData")
+
 ## Select ----------------------------------------------------------------------
 select()
 
@@ -153,3 +156,64 @@ bind_cols()
 
 mutate_at()
 mutate_all()
+
+
+########################
+#### Group Problems ####
+########################
+
+# Problem 1 --------------------------------------------------------------------
+
+# Problem 1: Using 1 chain of commands find the primary diagnosis codes that 
+# occured in at least 15 or more records, then reduce the dataset down to visits 
+# for just those observations and add a column dx_counts with the frequency of 
+# that dx
+
+# Note: you can do this in 3 lines of code
+
+# Your dataset will look something like this
+
+# A tibble: 380 x 13
+#   dx1   dx_count  ageu   age   sex  race month status region atype dx2   dx3     pr1
+#   <chr>    <int> <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>  <dbl> <dbl> <chr> <chr>   <chr> 
+# 1 41401       57     1    71     1     1    10      1      3     3 4111  "5854"  "0066"
+# 2 41401       57     1    78     2     1    12      1      2     2 486   "496"   ""    
+# 3 41401       57     1    55     1     1     8      1      3     1 07054 "27801" "3722"
+
+
+
+
+# Problem 2 --------------------------------------------------------------------
+
+# Problem 2 - Using 1 chain of commands count the most common primary diagnosis 
+# code by sex
+
+# Your dataset should look something like this:
+
+# A tibble: 2 x 3
+#    sex   dx1       n
+#   <dbl>  <chr>  <int>
+# 1     2  4019     27
+# 2     1  41401    38  
+
+
+
+# Problem 3 --------------------------------------------------------------------
+
+# Problem 3 - For each diagnosis code count the number of times it occered 
+# overall (n), the number of times it occured in females (female_n), the number
+# of times it occured in males (male_n), the overall rank of the code in terms 
+# of counts (overall_rank), the rank for female (female_rank) and the rank for
+# males (male_rank). Name he variable the values in parenthesize
+#
+# Hint: the dplyr helper function dense_rank(), is not required, but can help
+?dense_rank
+
+# Your result should look something like the following:
+
+# A tibble: 779 x 7
+#   dx1       n female_n male_n overall_rank female_rank male_rank
+#   <chr> <int>    <int>  <int>        <int>       <int>     <int>
+# 1 41401    57       19     38            1           5         1
+# 2 4019     53       27     26            2           1         4
+# 3 0389     50       21     29            3           4         2
