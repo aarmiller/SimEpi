@@ -32,6 +32,14 @@ the objects named `bene_2008, bene_2009, bene_2010, inpatient`.
 **Note:** I have saved my data in my R project directory for this course
 under `"SimEpi2021/data/synthetic_medicare/sample1/"`.
 
+``` r
+bene_2008 <- read_csv("data/synthetic_medicare/sample1/2008_beneficiary_summary_sample1.csv")
+bene_2009 <- read_csv("data/synthetic_medicare/sample1/2009_beneficiary_summary_sample1.csv")
+bene_2010 <- read_csv("data/synthetic_medicare/sample1/2010_beneficiary_summary_sample1.csv")
+inpatient <- read_csv("data/synthetic_medicare/sample1/inpatient_claims_sample1.csv",
+                      col_types = list(CLM_ID=col_character()))
+```
+
 ## Process the data
 
 Next process the data (clean and modify) so that it is easier to work
@@ -48,6 +56,18 @@ easier to understand. Name these variables as:
 `bene_id, sex, race, dob, state`. Finally, reduce the dataset down to
 just the distinct/unique beneficiaries (note: most beneficiaries are
 present in multiple years).
+
+``` r
+bene_info <- bind_rows(bene_2008,
+                       bene_2009,
+                       bene_2010) %>% 
+  select(bene_id = DESYNPUF_ID,
+         sex = BENE_SEX_IDENT_CD,
+         race = BENE_RACE_CD,
+         dob = BENE_BIRTH_DT,
+         state = SP_STATE_CODE) %>% 
+  distinct()
+```
 
 Your dataset should look like the following, and you should have 116,352
 unique beneficiaries
