@@ -328,7 +328,14 @@ nhds %>%
 # notice var_labls contains the labels for the variables
 var_labels
 
+var_labels$atype
+
 # inner_join to add atype variable
+nhds %>% 
+  inner_join(rename(var_labels$atype,atype = val))
+
+var_labels$atype
+
 inner_join(nhds,var_labels$atype, by = c("atype"="val")) %>% 
   mutate(atype=label) %>% 
   select(-label)
