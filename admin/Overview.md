@@ -68,8 +68,6 @@ document will be continually updated (check back frequently).
 
     -   Tibbles
 
-    -   Lists
-
     -   Vectors
 
 **Supplementary Readings**
@@ -86,13 +84,7 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Data visualization with ggplot2
-
--   Strings
-
--   Factors
-
--   Dates and Times
+-   Continue Data Transformation
 
 **Supplementary Readings**
 
@@ -105,6 +97,10 @@ document will be continually updated (check back frequently).
 ## Day 5 - Tuesday 2/9
 
 **Topics Covered**
+
+-   Data visualization with ggplot2
+
+<!-- -->
 
 -   Tidy Data
 
@@ -129,7 +125,9 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Random Number Generation
+-   Tidy Data
+
+-   Data Reshaping
 
 **Supplementary Readings**
 
@@ -154,6 +152,7 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
+-   Random Number Generation
 -   Monte Carlo Methods
 
 **Supplementary Readings**
@@ -177,12 +176,6 @@ document will be continually updated (check back frequently).
 
 -   Optimization and Efficient Coding
 
-**Supplementary Readings**
-
--   Efficient R Programming - Chapters
-    [3](https://csgillespie.github.io/efficientR/programming.html#general)
-    and [7](https://csgillespie.github.io/efficientR/performance.html)
-
 ## Day 11 - Tuesday 3/2
 
 **(No Class)**
@@ -194,5 +187,11 @@ document will be continually updated (check back frequently).
 -   Parallelization
 
 -   High Performance Computing (HPC)
+
+**Supplementary Readings**
+
+-   Efficient R Programming - Chapters
+    [3](https://csgillespie.github.io/efficientR/programming.html#general)
+    and [7](https://csgillespie.github.io/efficientR/performance.html)
 
 # Part 2 - Resampling and Data Generation Appproaches
