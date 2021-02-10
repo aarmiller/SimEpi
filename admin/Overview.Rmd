@@ -85,9 +85,8 @@ This document provides an outline of the topics, scripts and associated readings
 
 -   Data visualization with ggplot2
 
-```{=html}
 <!-- -->
-```
+
 -   Tidy Data
 
 -   Relational Data

@@ -183,7 +183,17 @@ into each category. Note: your data should look something like this:
 Using the above result, try to generate the following table that gives a
 population breakdown by race and sex. Note: this might take a few steps
 using the current functions we have covered (later we will discuss
-reshaping that will make this easier).
+reshaping that will make this easier). Hint: To make the column, below,
+with the combined count and percent you need to use the `paste()` or
+`paste0()` function. This function can be used to paste together vectors
+and create a string vector that combines elements. To see how this works
+look at the following:
+
+``` r
+paste0(c("Des Moines","Omaha"),", ",c("IA","NE"))
+```
+
+    ## [1] "Des Moines, IA" "Omaha, NE"
 
     ## # A tibble: 4 x 3
     ##   race     Male           Female       
