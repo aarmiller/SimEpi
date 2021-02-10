@@ -2,7 +2,8 @@ Week 3 Assignment - more on data tranformation and ggplot
 ================
 Due 2/18/2021
 
-Required packages for this assignment
+These are the required packages for this assignment. You may also want
+to install and load the `zoo` package.
 
 ``` r
 library(tidyverse)
