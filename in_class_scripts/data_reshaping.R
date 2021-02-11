@@ -23,9 +23,9 @@ load("data/nhds/nhds_adult.RData")
 
 dx_codes <- nhds_adult %>% 
   mutate(id=row_number()) %>% 
-  select(id,dx01:dx15)
+  select(id,dx01:dx15)  
 
-dx_codes
+
 
 # often we want to store things in long rather than wide format
 nhds_long <- dx_codes %>% 

@@ -9,6 +9,7 @@ list_of_packages <- c("microbenchmark","deSolve","rootSolve","Rcpp","EpiModel",
 install.packages(list_of_packages,dependencies = TRUE)
 
 ## old icd package
+# install.packages("rtools") # try uncommenting this if icd does not work
 devtools::install_version("icd", version = "4.0.9", repos = "http://cran.us.r-project.org")
 
 # remove the package list
