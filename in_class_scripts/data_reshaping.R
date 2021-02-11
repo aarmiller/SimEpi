@@ -103,3 +103,25 @@ injuries_long
 injuries_long %>% 
   ggplot(aes(x=dc_month,y=count,color =injury)) +
   geom_line()
+
+
+
+##################################
+#### Old Reshaping Functions #####
+##################################
+
+
+## Gather ----------------------------------------------------------------------
+
+# using gather, specify key name (name of category) and value name (name of corresponding
+# value) to create
+dx_codes %>% 
+  gather(key = "dx", value = "icd_code", -id)
+
+dx_codes %>% 
+  gather(key = "dx", value = "icd_code", -id, na.rm = TRUE)
+
+## Spread ----------------------------------------------------------------------
+nhds_long %>% 
+  spread(key = dx, value = icd)
+
