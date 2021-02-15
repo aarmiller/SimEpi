@@ -274,7 +274,15 @@ dev.off()
 #    the dots by sex. What trend emerges? Is there a different pattern by age 
 #    and sex, why might that be?
 
-
+nhds_adult %>% 
+  group_by(sex,age_years) %>% 
+  summarise(mean_los=mean(care_days)) %>% 
+  ggplot(aes(age_years,mean_los,color = sex)) +
+  geom_point() +
+  geom_smooth() +
+  xlab("Age") +
+  ylab("Mean Length of Stay") + 
+  ggtitle("LOS by age and sex")
 
 
 
@@ -283,21 +291,52 @@ dev.off()
 #    a scatter plot with age on x axis and % female on y-axis, then add a smooth
 #    trend line
 
-
+nhds_adult %>% 
+  group_by(age_years) %>% 
+  summarise(pct_female=sum(sex=="female")/n()) %>% 
+  ggplot(aes(age_years,pct_female)) +
+  geom_point() +
+  geom_smooth(span = 0.4) +
+  xlab("Age") +
+  ylab("Percent Female") +
+  ggtitle("Percent of admissions that were female by age")
 
 
 # 3) Now plot the number number of admissions by age for each sex. Draw a scatter
 #    plot with age on the x-axis and the number of observations on the y-axis. 
 #    Then color the dots by sex. Look for outliers.
 
+nhds_adult %>% 
+  count(age_years,sex) %>% 
+  ggplot(aes(age_years,n,color = sex)) +
+  geom_point() +
+  xlab("Age") +
+  ylab("Number of Admissions") +
+  ggtitle("Number of admissions by Age and Sex")
 
+nhds_adult %>% 
+  filter(age_years<90) %>% 
+  count(age_years,sex) %>% 
+  ggplot(aes(age_years,n,color = sex)) +
+  geom_point() +
+  geom_smooth(span = 0.4) +
+  xlab("Age") +
+  ylab("Number of Admissions") +
+  ggtitle("Number of admissions by Age and Sex")
 
 
 # 4) Now plot the number number of admissions by age (y-axis) for each sex 
 #    (color), just like the previous graph but add separate plots (facets) for 
 #    each admission type. What differences do you observe by admission type?
 
-
+nhds_adult %>% 
+  count(age_years,sex,adm_type) %>% 
+  ggplot(aes(age_years,n,color = sex)) +
+  geom_point() +
+  facet_wrap(~adm_type, scales = "free_y") +
+  xlab("Age") +
+  ylab("Number of Admmisions") +
+  ggtitle("Number of admissions by Age, Sex and Admission Type")
 
 
 # 5) Now looking at the above plot...see if you can validate your hypothesis (for
@@ -305,6 +344,11 @@ dev.off()
 #    the primary admission reason (dx_adm) for the group/admission type that 
 #    appears unusual.
 
-
-
+nhds_adult %>% 
+  filter(age_years<40, sex == "female", adm_type %in% c("urgent","elective")) %>% 
+  count(dx_adm) %>% 
+  arrange(desc(n)) %>% 
+  filter(!is.na(dx_adm)) %>% 
+  slice(1:50) %>% 
+  mutate(name = explain_code(dx_adm, warn = FALSE, condense = FALSE))
 
