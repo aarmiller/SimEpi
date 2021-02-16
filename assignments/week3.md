@@ -194,7 +194,33 @@ total deaths) and then a column with the corresponding values. Then you
 could use something like facets to compare the two different values in
 separate plots.
 
-![](week3_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+Your reshaped data should look like this:
+
+``` r
+plot_data <- covid_data %>% 
+  filter(state=="IA") %>%
+  select(date, total_cases,total_deaths) %>% 
+  gather(key = key, value = value, -date) %>%
+  mutate(key = ifelse(key == "total_cases","Total Cases", "Total Deaths"))
+plot_data
+```
+
+    ## # A tibble: 678 x 3
+    ##    date       key          value
+    ##    <date>     <chr>        <dbl>
+    ##  1 2021-02-07 Total Cases 271381
+    ##  2 2021-02-06 Total Cases 270935
+    ##  3 2021-02-05 Total Cases 270633
+    ##  4 2021-02-04 Total Cases 269984
+    ##  5 2021-02-03 Total Cases 269284
+    ##  6 2021-02-02 Total Cases 268376
+    ##  7 2021-02-01 Total Cases 267913
+    ##  8 2021-01-31 Total Cases 267558
+    ##  9 2021-01-30 Total Cases 266934
+    ## 10 2021-01-29 Total Cases 266280
+    ## # … with 668 more rows
+
+![](week3_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 # Plotting Trends Across States
 
@@ -207,23 +233,23 @@ distribution of weekly positivity rates across states. Specifically, use
 multiple box plots that are distinguished by color (note: here we use
 both the x and y arguments of the boxplot function).
 
-![](week3_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 Next return to daily death count line plot from above, and compare
 across states using colors to distinguish states:
 
-![](week3_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 That was ugly! It’s a bit challenging to see a difference in the trends
 across states because they are overlapping. An alternative approach is
 to plot a grid of individual plots for each state:
 
-![](week3_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 Notice that NE and MN still have some weirdness going on (i.e., negative
 deaths). Clean up the plot by removing those values:
 
-![](week3_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
 
 ## Analyze relationship with state population and cases/mortality
 
@@ -234,18 +260,18 @@ relationship between
 
     ## `geom_smooth()` using formula 'y ~ x'
 
-![](week3_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 Now do the same thing with mortality:
 
     ## `geom_smooth()` using formula 'y ~ x'
 
-![](week3_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 Next try using a reshaping function to reshape the data and plot both
 the trends with mortality and number of cases
 
-![](week3_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 **Advanced question (optional):** Can you identify which states have a
 total number of deaths that fall above or below their expected value
@@ -294,13 +320,13 @@ plot_data <- covid_data %>%
 
 Here is what your final plot should look like:
 
-![](week3_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 Next, create a similar plot to compare Iowa to a handful of other states
 across the US. Specifically compare Iowa to AZ, NJ, MA, ND, VT, CO and
 FL. Your plot should then look like the following:
 
-![](week3_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 **Challenge problem:** Create plots depicting the trajectory of the
 pandemic across multiple states, like the above plots, but now use
@@ -312,9 +338,9 @@ states. (Hint: use `select()` along with a reshaping command before you
 compute the number of total cases per capita; this will create a column
 indicator to denote deaths per capita and cases per-capita).
 
-![](week3_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 And your plots for Iowa and the other non-neighboring states should look
 like:
 
-![](week3_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](week3_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
