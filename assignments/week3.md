@@ -196,15 +196,6 @@ separate plots.
 
 Your reshaped data should look like this:
 
-``` r
-plot_data <- covid_data %>% 
-  filter(state=="IA") %>%
-  select(date, total_cases,total_deaths) %>% 
-  gather(key = key, value = value, -date) %>%
-  mutate(key = ifelse(key == "total_cases","Total Cases", "Total Deaths"))
-plot_data
-```
-
     ## # A tibble: 678 x 3
     ##    date       key          value
     ##    <date>     <chr>        <dbl>
