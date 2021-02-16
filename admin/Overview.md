@@ -98,20 +98,10 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Data visualization with ggplot2
-
-<!-- -->
-
--   Tidy Data
-
--   Relational Data
-
--   Databases
+-   Data visualization with ggplot2 (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/plotting_with_ggplot.R))
 
 **Supplementary Readings**
-
--   [Tidy Data](https://www.jstatsoft.org/article/view/v059i10) - by
-    Hadley Wickham
 
 -   R4DS - Chapters [12](https://r4ds.had.co.nz/tidy-data.html) and
     [13](https://r4ds.had.co.nz/relational-data.html)
@@ -125,19 +115,22 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Tidy Data
+-   Tidy Data (more on day 10)
 
--   Data Reshaping
+-   Data Reshaping (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/data_reshaping.R))
 
 **Supplementary Readings**
 
--   
+-   [Tidy Data](https://www.jstatsoft.org/article/view/v059i10) - by
+    Hadley Wickham
 
 ## Day 7 - Tuesday 2/16
 
 **Topics Covered**
 
--   Functions
+-   Functions (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/functions.R))
 
 -   Iteration
 
@@ -175,6 +168,8 @@ document will be continually updated (check back frequently).
 **Topics Covered**
 
 -   Optimization and Efficient Coding
+-   More on tidy data
+-   Relational Data & Databases
 
 ## Day 11 - Tuesday 3/2
 

@@ -1,5 +1,5 @@
 
-
+# This function covers an introduction to writing functions in R
 
 #########################
 #### Function Basics ####
@@ -518,4 +518,13 @@ lobstr::obj_addr(y)
 #    into a list containing two vectors one containing the odd values and one
 #    containing the even values.
 
+
+# 3) Complete question 4 from Excercises 19.2.1 (in R4DS) to first create a 
+#    function to compute variance, and one function to compute skewness. See
+#    here for the formulas: https://r4ds.had.co.nz/functions.html#exercises-50
+
+# create variance()
+
+
+# create skewness()
 

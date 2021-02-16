@@ -107,7 +107,7 @@ This document provides an outline of the topics, scripts and associated readings
 
 **Topics Covered**
 
--   Functions
+-   Functions (script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/functions.R))
 
 -   Iteration
 
