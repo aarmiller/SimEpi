@@ -717,4 +717,6 @@ mean_new(c(1,2,3,4,NA), na.rm = TRUE)
 mean(c(1,2,3,4,NA))
 mean(c(1,2,3,4,NA), na.rm = TRUE)
 
+do.call(is.prime(),list(1:10))
+
 
