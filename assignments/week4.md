@@ -116,6 +116,11 @@ Your function should then allow you to add indicators as a new column.
 Here is an example where we create an indicator for *C. difficile
 infection* (CDI):
 
+``` r
+nhds_adult %>% 
+  add_indicators(dx_codes = c("00845"), name = "cdi")
+```
+
     ## # A tibble: 129,242 x 40
     ##    age_years sex   race  marital_status dc_month dc_status care_days region
     ##        <int> <fct> <fct> <fct>             <int> <fct>         <int> <fct> 
@@ -140,30 +145,23 @@ infection* (CDI):
     ## #   dx_adm <icd9cm>, cdi <lgl>
 
 Your code should also allow you to create indicators based on a vector
-of ICD-9 codes. For example, here we create an indicator for AMI:
+of ICD-9 codes. For example, here we create an indicator for AMI, then
+count how many patients had an AMI.
 
-    ## # A tibble: 129,242 x 40
-    ##    age_years sex   race  marital_status dc_month dc_status care_days region
-    ##        <int> <fct> <fct> <fct>             <int> <fct>         <int> <fct> 
-    ##  1        19 fema… white not_stated            2 home              7 west  
-    ##  2        20 fema… black single                8 home              1 midwe…
-    ##  3        44 fema… black not_stated            8 home              1 north…
-    ##  4        80 fema… not_… not_stated           10 home              3 north…
-    ##  5        66 male  white not_stated            6 short_te…         1 north…
-    ##  6        52 fema… white not_stated            5 alive_NOS         8 south 
-    ##  7        76 fema… white widowed              11 home             19 south 
-    ##  8        58 fema… white widowed              12 alive_NOS         7 north…
-    ##  9        78 fema… asian divorced              2 home             15 south 
-    ## 10        33 fema… white not_stated            9 home              1 north…
-    ## # … with 129,232 more rows, and 32 more variables: n_beds <ord>,
-    ## #   hospital_ownership <fct>, dx01 <icd9cm>, dx02 <icd9cm>, dx03 <icd9cm>,
-    ## #   dx04 <icd9cm>, dx05 <icd9cm>, dx06 <icd9cm>, dx07 <icd9cm>, dx08 <icd9cm>,
-    ## #   dx09 <icd9cm>, dx10 <icd9cm>, dx11 <icd9cm>, dx12 <icd9cm>, dx13 <icd9cm>,
-    ## #   dx14 <icd9cm>, dx15 <icd9cm>, pc01 <icd9cm_p>, pc02 <icd9cm_p>,
-    ## #   pc03 <icd9cm_p>, pc04 <icd9cm_p>, pc05 <icd9cm_p>, pc06 <icd9cm_p>,
-    ## #   pc07 <icd9cm_p>, pc08 <icd9cm_p>, payor_primary <fct>,
-    ## #   payor_secondary <fct>, DRG <chr>, adm_type <fct>, adm_origin <fct>,
-    ## #   dx_adm <icd9cm>, ami <lgl>
+``` r
+library(icd)
+ami_codes <- children("410")
+
+nhds_adult %>% 
+  add_indicators(dx_codes = ami_codes, name = "ami") %>% 
+  count(ami)
+```
+
+    ## # A tibble: 2 x 2
+    ##   ami        n
+    ## * <lgl>  <int>
+    ## 1 FALSE 126588
+    ## 2 TRUE    2654
 
 ### Indicators based on multiple diagnosis locations
 
@@ -180,6 +178,17 @@ indicators for primary CDI (based on principal diagnosis) and secondary
 CDI, then count the number of cases of CDI. This tells us that 374
 people had CDI as a primary diagnosis, 774 as a secondary diagnosis, and
 128,094 did not have CDI.
+
+``` r
+nhds_adult %>% 
+  add_indicators(dx_codes = c("00845"),
+                 dx_num = 1,
+                 name = "primary_cdi") %>% 
+  add_indicators(dx_codes = c("00845"),
+                 dx_num = 2:15,
+                 name = "secondary_cdi") %>% 
+  count(primary_cdi,secondary_cdi)
+```
 
     ## # A tibble: 3 x 3
     ##   primary_cdi secondary_cdi      n
@@ -223,11 +232,11 @@ run_single_trial(sample_sizes)
     ## # A tibble: 5 x 2
     ##   sample_size sample_mean
     ##         <dbl>       <dbl>
-    ## 1          10     0.532  
-    ## 2          20     0.192  
-    ## 3          50    -0.224  
-    ## 4         100    -0.0361 
-    ## 5         200    -0.00250
+    ## 1          10     0.363  
+    ## 2          20    -0.0966 
+    ## 3          50     0.118  
+    ## 4         100     0.0201 
+    ## 5         200     0.00875
 
 Next write a function that takes 2 arguments, a vector of sample sizes
 and the number of trials to run, and then runs multiple trials using the
@@ -243,16 +252,16 @@ run_trials(sample_sizes,100)
     ## # A tibble: 500 x 3
     ##    trial sample_size sample_mean
     ##    <int>       <dbl>       <dbl>
-    ##  1     1          10      0.0220
-    ##  2     1          20     -0.180 
-    ##  3     1          50      0.145 
-    ##  4     1         100      0.0423
-    ##  5     1         200     -0.0217
-    ##  6     2          10      0.138 
-    ##  7     2          20      0.260 
-    ##  8     2          50     -0.0705
-    ##  9     2         100     -0.133 
-    ## 10     2         200      0.0381
+    ##  1     1          10     -0.145 
+    ##  2     1          20      0.0992
+    ##  3     1          50      0.0247
+    ##  4     1         100     -0.136 
+    ##  5     1         200     -0.0841
+    ##  6     2          10     -0.165 
+    ##  7     2          20     -0.326 
+    ##  8     2          50     -0.0118
+    ##  9     2         100      0.139 
+    ## 10     2         200      0.0178
     ## # … with 490 more rows
 
 Finally use the above function to run 1,000 simulation trials of the
@@ -264,9 +273,9 @@ around these values:
     ## # A tibble: 5 x 2
     ##   sample_size prob_outside
     ## *       <dbl>        <dbl>
-    ## 1          10        0.33 
-    ## 2          20        0.167
-    ## 3          50        0.029
+    ## 1          10        0.346
+    ## 2          20        0.177
+    ## 3          50        0.034
     ## 4         100        0.003
     ## 5         200        0
 
@@ -274,7 +283,8 @@ around these values:
 
 The following questions were copied from Chapter 19 of our textbook
 R4DS. You can find additional details in the chapter
-[here](https://r4ds.had.co.nz/functions.html).
+[here](https://r4ds.had.co.nz/functions.html). **Note: text in
+quotes/italics is taken directly from R4DS.**
 
 #### 19.2.1 - Question 4
 
