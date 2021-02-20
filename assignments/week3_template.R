@@ -1,6 +1,6 @@
 
 ############################################################
-### Assignment 1 - Simulation In Epidemiology Spring 2021
+### Assignment 2 - Simulation In Epidemiology Spring 2021
 ### Due Date: 2/18/2021
 ############################################################
 

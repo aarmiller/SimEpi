@@ -38,7 +38,7 @@ for (i in 1:10){
   flip_coin()
 }
 
-# to see output printed you have to explicitely print
+# to see output printed you have to explicitly print
 for (i in 1:10){
   print(flip_coin())
 }
@@ -201,7 +201,7 @@ map_int(1:10, ~flip_coin(1)=="Heads")
 # map over two vectors/lists
 add_nums <- function(x,y) x+y
 
-map2(1:10, 11:20, add_nums)
+map2_dbl(1:10, 11:20, add_nums)
 
 
 # creating function using ~ .x and .y
@@ -221,7 +221,7 @@ pmap(list(1:3,4:6,7:9),add_divide_nums)
 
 
 # create function
-pmap(list(1:3,4:6,7:9),function(a,b,c) (a+b)/c)
+pmap_dbl(list(c=1:3,a=4:6,b=7:9),function(a,b,c) (a+b)/c)
 
 
 # convert to vector
@@ -252,18 +252,43 @@ tmp_data %>% # make smaller so this performs quicker
 # where this really comes in handy
 # let's say we want to run a regression model for each region where we predict
 # los as a function of sex, age, and admission type
-tmp_data <- nhds_adult %>% 
-  select(region,care_days,age_years,sex,adm_type)
+library(broom)
 
-tmp_data %>% 
+tmp_data <- nhds_adult %>% 
+  select(region,care_days,age_years,sex,adm_type) %>% 
   group_by(region) %>% 
-  nest() %>% 
+  nest()
+
+tmp_data
+tmp_data$data[[1]]
+
+mod_res <- tmp_data %>% 
   mutate(model = map(data,
                      ~lm(care_days ~ age_years + sex + adm_type, data=.))) %>%
-  mutate(estimates = map(model,~broom::tidy(.))) %>% 
+  mutate(estimates = map(model,tidy),
+         performance = map(model,glance))
+  
+mod_res %>% 
   select(region,estimates) %>% 
   unnest(estimates)
-  
+
+mod_res %>% 
+  select(region,performance) %>% 
+  unnest(performance)
+
+
+# find DRG's with more than 100 observations
+nhds_adult %>% 
+  count(DRG) %>% 
+  filter(n>100) %>% 
+  inner_join(nhds_adult) %>% 
+  select(DRG,care_days,age_years,adm_type) %>% 
+  group_by(DRG) %>% 
+  nest() %>% 
+  mutate(model = map(data,
+                     ~lm(care_days ~ age_years + adm_type, data=.))) %>%
+  mutate(estimates = map(model,tidy),
+         performance = map(model,glance))
   
 
 ###########################
