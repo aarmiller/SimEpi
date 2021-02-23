@@ -6,7 +6,7 @@ library(tidyverse)
 #### Random Uniform ####
 ########################
 
-# this is the cannonical distribution
+# this is the canonical distribution
 
 n <- 1000
 
