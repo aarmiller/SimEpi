@@ -6,17 +6,17 @@ library(tidyverse)
 #### Random Uniform ####
 ########################
 
-# this is the canonical distribution
+# this is the canonical distribution for random number generation
 
-n <- 1000
+n <- 1000 # number of draws
+u <- runif(n) # generate random uniform
 
-x <- runif(n)
+# view histogram of results
+hist(u)
 
-hist(ceiling(5*runif(n)),breaks = 0:5)
-
-table(ceiling(5*runif(n)))
-
+# we can change the default min and max values on the uniform distribution
 runif(n,min = 1, max = 100)
+
 
 ##########################
 #### Inversion Method ####
@@ -24,24 +24,26 @@ runif(n,min = 1, max = 100)
 
 ## Exponential Distribution ----------------------------------------------------
 
-n <- 100
-u <- runif(n,0,1)
-lambda <- 1   
+n <- 1000  # number of draws
+u <- runif(n) # generate random uniform
+lambda <- 1   # choose a lambda value for the exponential distribution
 
+# function to compute the inverse of CDF distribution
 inverse_exp <- function(x){-(1/lambda)*log(x)}
 
-x <- inverse_exp(u)  # The inverse of the CDF
+x <- inverse_exp(u)  # Use inversion method to get random exponential values
 
-hist(x,breaks = 50)
+hist(x,breaks = 50)  # view results
 
-# write a function to look at different sample sizes and values for lambda
+# Now write a function to generate random exponential values so that we can look 
+# at different sample sizes and values for lambda
 rand_exp <- function(n,lambda=1){
   u <- runif(n,0,1)
   x <- -(1/lambda)*log(u)
   return(x)
 }
 
-# look at simulating different sample
+# look at simulating different sample sizes
 tibble(n=c(100,1000,10000,100000)) %>% 
   mutate(draw=map(n,rand_exp)) %>% 
   unnest(draw) %>% 
@@ -49,7 +51,7 @@ tibble(n=c(100,1000,10000,100000)) %>%
   geom_histogram(bins=100) +
   facet_wrap(~n,scales = "free_y")
 
-# for different lambda values
+# or for different lambda values
 tibble(lambda=c(0.1,0.5,1,2)) %>% 
   mutate(draw=map(lambda,~rand_exp(n=10000,lambda = .))) %>% 
   unnest(draw) %>% 
@@ -59,10 +61,10 @@ tibble(lambda=c(0.1,0.5,1,2)) %>%
 
 ## Normal Distribution ---------------------------------------------------------
 
-n <- 1000
-u <- runif(n)
+n <- 1000  # number of draws
+u <- runif(n) # generate random uniform
 
-# pass uniform values to inverse of normal
+# pass uniform values to inverse of normal (using the qnorm function)
 x <- qnorm(u)
 
 # plot a histogram of our samples
@@ -74,57 +76,64 @@ lines(densitySamps, dnorm(densitySamps), lwd = 2, col = "red")
 
 ## Example distribution --------------------------------------------------------
 
-n <- 1000
-u <- runif(n)
-x <- u^(1/3)
+# This is a hypothetical distribution where the inverse function is x^(1/3)
+
+n <- 1000  # number of draws
+u <- runif(n) # generate random uniform
+x <- u^(1/3) # use inversion method
 hist(x, prob = TRUE) #density histogram of sample
 y <- seq(0, 1, .01)
 lines(y, 3*y^2)#density curve f(x)
 
-#Inverse CDF
 
 ## Bernoulli Distribution ------------------------------------------------------
-u <- runif(100,0,1)
 
-ifelse(u <= 0.2, 0 ,1)
+n <- 1000  # number of draws
+u <- runif(n) # generate random uniform
 
-u>0.2
+p <- 0.4 # Bernoulli(p = 4)
 
-as.integer(u>0.2)
+# F(0) = 1-p so inverse is F^-1(u) = 1 if u > 1-p = 0.6
+# convert to results of bernouli trials
+x <- as.integer(u > (1-p))
 
-as.integer(runif(100,0,1)>0.2)
+hist(x)
+
 
 ## Discrete Uniform ------------------------------------------------------------
 
-a <- 2
-b <- 10
+n <- 1000  # number of draws
+u <- runif(n) # generate random uniform
+a <- 2  # min value
+b <- 10  # max value
+m <- length(a:b) # number of discrete values in domain
 
-n <- length(a:b) # or b-a+1
+# compute inversion
+x <- floor(m*u)+a
 
-u <- runif(1000,0,1)
-
-x <- floor(n*u)+a
-
+# view results
 ggplot(data.frame(x),aes(x)) +
   geom_bar()
 
 
 ## Discrete non-uniform --------------------------------------------------------
 
-vals <- c("a","b","c","d")
-probs <-  c(.4,.3,.2,.1)
-n <- 1000
+n <- 1000  # number of draws
+u <- runif(n) # generate random uniform
+vals <- c("a","b","c","d") # values to draw from
+probs <-  c(.4,.3,.2,.1)   # probability values to draw with
 
-# lookup table
+# cumulative sums for the lookup table 
 cut_points <- c(0,cumsum(probs))
 
-u <- runif(n,0,1)
-
+# now use cut function to split up u by the corresponding cut points and then 
+# draw the associated vals for labels
 x <- cut(x = u, breaks = cut_points,labels = vals)
 
 # plot results
 ggplot(data.frame(x),aes(x)) +
   geom_bar()
+
 
 #########################################
 #### Alias / Square Histogram Method ####
