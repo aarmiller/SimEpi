@@ -301,6 +301,53 @@ nhds_adult %>%
 #    question 3 in R4DS 21.3.5. (See assignment for example of output).
 
 
+column <- mtcars[,2]
+
+is.numeric(column)
+
+mean(column)
+
+mtcars[,2]
+
+paste("a",mean(column))
+
+paste0("a","b")
+
+
+mtcars2 <- mutate(mtcars,mpg=as.character(mpg))
+
+mtcars2$mpg
+
+for (i in 1:ncol(mtcars2)){
+  column <- mtcars2[,i]
+  
+  mean_val <- ifelse(is.numeric(column)==TRUE,mean(column),NA)
+  
+  name_column <- colnames(mtcars2)[i]
+  
+  print(paste("The mean for column",name_column,"is",mean_val))
+}
+
+for (i in 1:ncol(mtcars2)){
+  column <- mtcars2[,i]
+  
+  if (is.numeric(column)){
+    
+    mean_val <- mean(column)
+    
+    name_column <- colnames(mtcars2)[i]
+    
+    print(paste("The mean for column",name_column,"is",mean_val))
+  }
+}
+
+ifelse(is.numeric(column)==TRUE,mean(column))
+
+for (i in 1:length(mtcars)){
+  print(i)
+}
+
+
 #### Note: for the following problems see the week4 assignment for more details:
 
 # 2) This problem is intended to demonstrate how a study sample size relates to
