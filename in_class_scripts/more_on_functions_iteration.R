@@ -28,23 +28,27 @@ nhds_new <- nhds_adult %>%
 # Let's start by doing this steps outside of a function
 
 # start by creating age bins
-age_bins <- c(18,30,45,65,120)
+age_bins <- c(18,31,45,65,120)
 
 # create some example ages to start working with
 test_ages <- 18:100
 
 # use the cut function to segment into age bins
-cut()
+cut(x = test_ages, breaks = age_bins, right = FALSE)
 
 # add the age categories to the dataset
-
+nhds_new %>% 
+  mutate(age_cats = cut(x = age, breaks = age_bins, right = FALSE))
 
 
 
 ## Create the function ---------------------------------------------------------
 
 add_age_cats <- function(data, cat_breaks){
-
+  
+  data %>% 
+    mutate(age_cats = cut(x = age, breaks = cat_breaks, right = FALSE))
+  
 }
 
 ## check that the function works -----------------------------------------------
@@ -64,6 +68,7 @@ nhds_new %>%
 
 # notice that the previous function is of limited use
 nhds_adult %>% 
+  rename(age=age_years) %>% 
   add_age_cats(age_bins)
 
 # Now let's make a more generic version of the function so we can apply it to
@@ -84,21 +89,29 @@ nhds_adult %>%
 var_name <- "age"
 
 # now subset that dataset to the variable of interest using base R
-
+var_to_cut <- nhds_new[[var_name]]
 
 # Now create the categories
-
+new_categories <- cut(x = var_to_cut, breaks = age_bins, right = FALSE)
 
 # now mutate the variable in the dataset 
 # note create a temporary dataset so you don't overwrite the data we want to 
 # work with
 tmp_new_data <- nhds_new
 
+tmp_new_data[[var_name]] <- new_categories
 
   
 ## Create the function ---------------------------------------------------------
 categorize_var <- function(data,var,breaks){
   
+  var_to_cut <- data[[var]]
+  
+  new_categories <- cut(x = var_to_cut, breaks = breaks, right = FALSE)
+  
+  data[[var]] <- new_categories
+  
+  data
 
 }
 
