@@ -155,58 +155,82 @@ x <- sample(c("a","b","c","d"), size = n, replace = TRUE, prob = c(.4,.3,.2,.1))
 
 ## Simulate from beta distribution
 
-# Example - from statistical computing in R 
+# Note this Example - from statistical computing in R (Rizzo) - pg
+# here we want to sample from a beta distribution
 
-n <- 1000
-k <- 0 #counter for accepted
-j <- 0 #iterations
+n <- 1000 # number of values to generate
+k <- 0 # counter for number of accepted values
+j <- 0 # counter for current iterations
 y <- numeric(n)
 
+# Note the beta density is given by f(x) = 6x(1-x), for this example we will
+# us c = 6 and g(x) = 1 (i.e. the uniform density)
+
+c <- 6
+f <- function(x) 6*x*(1-x)
+g <- function(x) 1
+
+# remember we are going to draw random value x from g(x) (i.e., from unif(0,1)),
+# and if that value x is such that f(x) / c*g(x) > u then we accept
+
 while (k < n) {
-  u <- runif(1)
-  j <- j + 1
-  x <- runif(1) #random variate from g
-  if (x * (1-x) > u) {
-    #we accept x
-    k <- k + 1
+  j <- j + 1  # iteration tracker to see how many total runs
+  
+  u <- runif(1) # generate random uniform for comparison
+  
+  x <- runif(1) #random variable from g we will consider accepting or rejecting
+  
+  # accept reject condition to check
+  if (f(x)/(c*g(x)) > u) {
+    
+    # we accept x and add it to the vector y
     y[k] <- x
+    # increase count
+    k <- k + 1
   }
 }
 
 # plot results
 hist(y)
 
+# count number of rejections: total iterations - total values generated
+j-k
 
-n <- 1000
-k <- 0 #counter for accepted
-k2 <- 0 #counter for 
-j <- 0 #iterations
+#####
+## note if we use 3/2 instead of 6 would require fewer rejections
+#####
+
+n <- 1000 # number of values to generate
+k <- 0 # counter for number of accepted values
+j <- 0 # counter for current iterations
 y <- numeric(n)
-y_rej <- numeric(6000)
+
+c <- 3/2
+f <- function(x) 6*x*(1-x)
+g <- function(x) 1
+
 while (k < n) {
-  u <- runif(1)
-  j <- j + 1
-  x <- runif(1) #random variate from g
-  if (x * (1-x) > u) {
-    #we accept x
-    k <- k + 1
+  j <- j + 1  # iteration tracker to see how many total runs
+  
+  u <- runif(1) # generate random uniform for comparison
+  
+  x <- runif(1) #random variable from g we will consider accepting or rejecting
+  
+  # accept reject condition to check
+  if (f(x)/(c*g(x)) > u) {
+    
+    # we accept x and add it to the vector y
     y[k] <- x
-  } else {
-    k2 <- k2 + 1
-    y_rej[k2] <- x
+    # increase count
+    k <- k + 1
   }
 }
 
 # plot results
 hist(y)
 
-hist(y_rej[y_rej>0])
-
-# note if we use 3/2 instead of 6 would require fewer rejections
-
-
-
-
+# count number of rejections: total iterations - total values generated
+j-k
 
 ################################
 #### Monte-Carlo Simulation ####
