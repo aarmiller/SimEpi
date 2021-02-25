@@ -292,4 +292,64 @@ random_points_2 %>%
 
 ## Monte-Carlo Integration -----------------------------------------------------
 
+# Note: feel free to disregard this section if have not covered integration in 
+#       a prior course
 
+# suppose we want to integrate e^-x over the interval 0 to 1
+# the integral of x can be easily computed as e^(-0) - e^(-1) = 1-e^(-1)
+
+# the exact answer
+1-exp(-1)
+
+# the monte-carlo estimate
+n <- 10000 # number of trials
+x <- runif(n) # random uniform over (0,1)
+
+# the monte-carlo estimate
+mean(exp(-x))
+
+
+# now suppose more generally we want to compute the integral over some interval
+# a b, this requires a bit of math because the limits of integration differ. We 
+# can do this by using a uniform(a,b) distribution and computing 
+# (b-a)*mean(exp(x)) where x are the vector of generated values (Note this is a 
+# transformation of the integral)
+
+# the exact answer (as a function)
+exact_integral <- function(a,b) exp(-a)-exp(-b)
+
+exact_integral(0,1)
+exact_integral(0,3)
+exact_integral(0,10)
+
+# a quick plot as a reminder what values we are integrating over
+tibble(x=seq(0,10,.1)) %>% 
+  mutate(y=exp(-x)) %>% 
+  ggplot(aes(x,y)) +
+  geom_line()
+
+# now we can write a function that computes the monte-carlo estimate of this integral
+
+monte_carlo_integral <- function(a,b,n){
+  # generate random uniform values based on the domain we specify
+  x <- runif(n, min = a, max = b)
+  # return the monte carlo estimate
+  mean(exp(-x)*(b-a))
+}
+
+# or without transforming the domain on the random draws
+monte_carlo_integral2 <- function(a,b,n){
+  # generate random uniform values based on the domain we specify
+  x <- runif(n)
+  # return the monte carlo estimate
+  mean(exp(-(x*(b-a)+a))*(b-a))
+}
+
+exact_integral(1,3)
+monte_carlo_integral(1,3,100000)
+monte_carlo_integral2(1,3,100000)
+
+
+exact_integral(1,2)
+monte_carlo_integral(1,2,100000)
+monte_carlo_integral2(1,2,100000)
