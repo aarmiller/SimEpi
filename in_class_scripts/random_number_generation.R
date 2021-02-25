@@ -153,38 +153,45 @@ x <- sample(c("a","b","c","d"), size = n, replace = TRUE, prob = c(.4,.3,.2,.1))
 #### Rejection Sampling ####
 ############################
 
-## Simulate from beta distribution
+## Simulate from beta(alpha = 2, beta = 2) distribution
 
-# Note this Example - from statistical computing in R (Rizzo) - pg
-# here we want to sample from a beta distribution
+# Note this Example - from statistical computing in R (Rizzo) - Example 3.7
+# here we want to sample from a beta(2,2) distribution
 
 n <- 1000 # number of values to generate
 k <- 0 # counter for number of accepted values
 j <- 0 # counter for current iterations
 y <- numeric(n)
 
-# Note the beta density is given by f(x) = 6x(1-x), for this example we will
-# us c = 6 and g(x) = 1 (i.e. the uniform density)
+# Note the beta density, when alpha = 2 and beta = 2, is given by f(x) = 6x(1-x), 
+# for this example we will use c = 6 and g(x) = 1 (i.e. the uniform density). 
+# Note that the unif(0,1) density is given by g(x) = 1
 
 c <- 6
 f <- function(x) 6*x*(1-x)
 g <- function(x) 1
 
 # remember we are going to draw random value x from g(x) (i.e., from unif(0,1)),
-# and if that value x is such that f(x) / c*g(x) > u then we accept
+# and if that value x is such that f(x) / (c*g(x)) > u then we accept the value
+# we drew
+
 
 while (k < n) {
-  j <- j + 1  # iteration tracker to see how many total runs
   
-  u <- runif(1) # generate random uniform for comparison
+  # while we have fewer than n random values accepted, do the following:
   
-  x <- runif(1) #random variable from g we will consider accepting or rejecting
+  j <- j + 1  # increase iteration tracker to see how many total runs
+  
+  u <- runif(1) # generate random uniform u for comparison
+  
+  x <- runif(1) #random variable from g that we will consider accepting or rejecting
   
   # accept reject condition to check
   if (f(x)/(c*g(x)) > u) {
     
     # we accept x and add it to the vector y
     y[k] <- x
+    
     # increase count
     k <- k + 1
   }
