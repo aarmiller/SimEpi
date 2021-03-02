@@ -153,11 +153,11 @@ sqrt(4)
 sqrt(16)
 
 # write the guts
-
+sqrt(5) %% 1
 
 # write the function
 perfect_square <- function(x){
-  
+  (sqrt(x) %% 1) == 0
 }
 
 # check the function
@@ -174,19 +174,62 @@ perfect_square(c(1,2,3,4,5))
 ## Create the guts (i.e., the loop)
 
 # the loop
+n <- 100
 for (i in 1:n){
-  
+  if (perfect_square(i)){
+    print(i)
+  }
 }
 
-# vector from loop
+# create vector from loop...this does not quite work...
+res <- vector()
 for (i in 1:n){
-  
+  if (perfect_square(i)){
+    res[i] <- i
+  }
+}
+res
+
+# another approach that works
+res <- vector(mode = "integer")
+for (i in 1:n){
+  if (perfect_square(i)){
+    res <- c(res,i)
+  }
 }
 
+# another approach using two index trackers
+res <- vector(mode = "integer")
+j <- 1
+for (i in 1:n){
+  if (perfect_square(i)){
+    res[j] <- i
+    j <- j + 1
+  }
+}
+res
+
+# still another approach, using which after the loop
+res <- vector()
+j <- 1
+for (i in 1:n){
+  res[i] <- perfect_square(i)
+}
+which(res)
+
+  
 ## Now create the function
 
 find_perfect_squares1 <- function(x){
-
+  
+  res <- vector(mode = "integer")
+  
+  for (i in 1:x){
+    if (perfect_square(i)){
+      res <- c(res,i)
+    }
+  }
+  res
 }
 
 ## test the function
@@ -197,15 +240,16 @@ find_perfect_squares1(5000)
 
 # notice that perfect_square() is already vectorized
 perfect_square(1:20)
+perfect_square(1:n)
 
 ## create the guts
-
+which(perfect_square(1:n))
+(1:n)[perfect_square(1:n)]
 
 ## create the function
 
 find_perfect_squares2 <- function(x){
-
-  
+  which(perfect_square(1:x))
 }
 
 ## test the function
@@ -222,10 +266,25 @@ find_perfect_squares2(5000)
 
 ## Write the guts of the function
 
+stop_val <- 100
+current_val <- 1
+res <- vector()
+while (current_val^2 <= stop_val){
+  res <- c(res,current_val^2)
+  current_val <- current_val + 1
+}
+res
+
 
 ## Write the function
 find_perfect_squares3 <- function(x){
-
+  current_val <- 1
+  res <- vector()
+  while (current_val^2 <= x){
+    res <- c(res,current_val^2)
+    current_val <- current_val + 1
+  }
+  res
 }
 
 ## Test the function
@@ -236,7 +295,7 @@ find_perfect_squares3(5000)
 ##########################################################
 
 
-find_perfect_squares(50000)
+find_perfect_squares1(50000)
 find_perfect_squares2(50000)
 find_perfect_squares3(50000)
 
@@ -245,13 +304,13 @@ find_perfect_squares3(50000)
 
 # you could uses system.time()...but this is only one trial and could be 
 # dependent on other processes
-system.time(find_perfect_squares(50000))
+system.time(find_perfect_squares1(50000))
 system.time(find_perfect_squares2(50000))
 system.time(find_perfect_squares3(50000))
 
 # a better option is the microbenchmark package
 library(microbenchmark)
 
-microbenchmark(find_perfect_squares(50000),
+microbenchmark(find_perfect_squares1(50000),
                find_perfect_squares2(50000),
                find_perfect_squares3(50000))

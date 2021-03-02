@@ -1,6 +1,7 @@
 
 
 library(tidyverse)
+rm(list = ls())
 
 
 #### Review Session ####
@@ -28,12 +29,30 @@ nhds_adult %>%
 # Best for writing functions or when the outcome you are trying to extract is 
 # NOT a data.frame (e.g., single elements or vectors)
 
+# The same subsetting opperations as above
 tmp <- nhds_adult[c("age_years","sex")]
 
 names(tmp) <- c("age","sex")
 
 tmp[tmp$age>=65,]
 
+# some other subsetting operations
+
+# re-assign a single name
+names(tmp)[1] <- "new_age"
+
+# find name to subset
+names(tmp)[which(names(tmp)=="new_age")] <- "age"
+
+
+# subsetting based on index locations
+tmp[c(1,3),c(1)]
+
+tmp[c(1,3),1]
+
+# subsetting based on logical vectors that indicate index locations (i.e., the
+# index location where there is a TRUE value)
+tmp[tmp$age >= 65, c(TRUE,FALSE)]
 
 
 ###################
@@ -58,30 +77,35 @@ mean(drawn_sample)
 # we can turn this into a function of sample size n
 
 draw_sample_mean <- function(n){
-  
+  drawn_sample <- rnorm(n, mean = 0, sd = 1)
+  mean(drawn_sample)
 }
 
+# test that the function works
 draw_sample_mean(10)
+
+draw_sample_mean(100)
 
 
 ## Simulate with a for loop ----------------------------------------------------
 
 # printing output
 for (i in sample_sizes){
-  
+  print(draw_sample_mean(i))
 }
 
 # storing output in a vector
-
+res <- vector()
 for (i in 1:length(sample_sizes)){
-  
+  res[i] <- draw_sample_mean(sample_sizes[i])
 }
+res
 
 ## Simulate with apply function ------------------------------------------------
 
-lapply()
+lapply(sample_sizes, draw_sample_mean)
 
-sapply()
+sapply(sample_sizes, draw_sample_mean)
 
 # without the function from aboe
 sapply()
@@ -89,9 +113,9 @@ sapply()
 
 ## Simulate with the map function ----------------------------------------------
 
-map()
+map(sample_sizes, draw_sample_mean)
 
-map_dbl()
+map_dbl(sample_sizes, draw_sample_mean)
 
 # without the function from above
 map()
