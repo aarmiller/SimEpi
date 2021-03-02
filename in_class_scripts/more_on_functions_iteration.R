@@ -169,7 +169,7 @@ perfect_square(c(1,2,3,4,5))
 
 ## Algorithm 1: Write function with for loop -----------------------------------
 
-# For this algorithm we will use a for loop to check all values up to 
+# For this algorithm we will use a for loop to check all values up to n
 
 ## Create the guts (i.e., the loop)
 
