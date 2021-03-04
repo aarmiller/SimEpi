@@ -73,6 +73,8 @@ Rcpp::cppFunction('
     }
   ')
 
+wmean_cpp(x,w)
+
 
 microbenchmark(weighted.mean(x,w),  # Built-in R function
                wmean_loop(x,w),     # Our explicit for loop
@@ -229,6 +231,7 @@ microbenchmark(fib_R(20),        # The R recursive function
                fib_R_fast(20),   # The R efficient loop
                fib_cpp_fast(20)) # The cpp efficient loop
 
+?microbenchmark
 
 
 #################################################

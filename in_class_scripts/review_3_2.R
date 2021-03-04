@@ -159,7 +159,7 @@ run_expirement <- function(sample_size,m){
   
 }
 
-run_expirement(10,100)
+run_expirement(sample_size=10,m=100)
 
 
 # Now we can perform the simulation across sample sizes
@@ -169,7 +169,7 @@ run_expirement(10,100)
 res <- list()
 
 for (i in 1:length(sample_sizes)){
-  res[[i]] <- run_expirement(i,m)
+  res[[i]] <- run_expirement(sample_sizes[i],m)
 }
 
 res
