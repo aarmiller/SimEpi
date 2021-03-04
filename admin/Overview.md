@@ -132,7 +132,8 @@ document will be continually updated (check back frequently).
 -   Functions (script
     [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/functions.R))
 
--   Iteration
+-   Iteration (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/iteration.R))
 
 -   Purrr
 
@@ -145,7 +146,8 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Random Number Generation
+-   Random Number Generation (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/random_number_generation.R))
 -   Monte Carlo Methods
 
 **Supplementary Readings**
@@ -167,17 +169,20 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Optimization and Efficient Coding
 -   More on tidy data
 -   Relational Data & Databases
 
 ## Day 11 - Tuesday 3/2
 
-**(No Class)**
+**(No Class) - Optional Review Session** (Script
+[here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/review_3_2.R))
 
 ## Day 12 - Thursday 3/4
 
 **Topics Covered**
+
+-   Speed & Efficiency (script
+    [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/efficiency_and_speed.R))
 
 -   Parallelization
 
@@ -198,8 +203,6 @@ document will be continually updated (check back frequently).
 -   Probability Theory Through simulation
 
 **Supplementary Readings**
-
--   
 
 ## Day 14 - Thursday
 
@@ -235,13 +238,17 @@ document will be continually updated (check back frequently).
 
 **Supplementary Readings**
 
+-   *To Explain or to Predict?* - Galit Shmueli
+
+-   ISLR - Chapter ()
+
 ## Day 16 - Tuesday
 
 **Topics Covered**
 
 -   ML Method 1 - KNN
 
--   ML Method 2 - CART
+-   ML Method 2 - Recursive Partitioning / CART
 
 **Supplementary Readings**
 
@@ -259,7 +266,9 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Brief overview of advanced ML methods - NNets / Deep Learning
+-   Brief overview of advanced Supervised ML methods - NNets / Deep
+    Learning
+-   Brief overview of Unsupervised Learning
 
 **Supplementary Readings**
 
