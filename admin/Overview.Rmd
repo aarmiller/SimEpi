@@ -109,7 +109,7 @@ This document provides an outline of the topics, scripts and associated readings
 
 -   Functions (script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/functions.R))
 
--   Iteration
+-   Iteration (script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/iteration.R))
 
 -   Purrr
 
@@ -121,7 +121,7 @@ This document provides an outline of the topics, scripts and associated readings
 
 **Topics Covered**
 
--   Random Number Generation
+-   Random Number Generation (script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/random_number_generation.R))
 -   Monte Carlo Methods
 
 **Supplementary Readings**
@@ -142,17 +142,18 @@ This document provides an outline of the topics, scripts and associated readings
 
 **Topics Covered**
 
--   Optimization and Efficient Coding
 -   More on tidy data
 -   Relational Data & Databases
 
 ## Day 11 - Tuesday 3/2
 
-**(No Class)**
+**(No Class) - Optional Review Session** (Script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/review_3_2.R))
 
 ## Day 12 - Thursday 3/4
 
 **Topics Covered**
+
+-   Speed & Efficiency (script [here](https://github.com/aarmiller/SimEpi/blob/main/in_class_scripts/efficiency_and_speed.R))
 
 -   Parallelization
 
@@ -171,8 +172,6 @@ This document provides an outline of the topics, scripts and associated readings
 -   Probability Theory Through simulation
 
 **Supplementary Readings**
-
--   
 
 ## Day 14 - Thursday
 
@@ -208,13 +207,17 @@ This document provides an outline of the topics, scripts and associated readings
 
 **Supplementary Readings**
 
+-   *To Explain or to Predict?* - Galit Shmueli
+
+-   ISLR - Chapter ()
+
 ## Day 16 - Tuesday
 
 **Topics Covered**
 
 -   ML Method 1 - KNN
 
--   ML Method 2 - CART
+-   ML Method 2 - Recursive Partitioning / CART
 
 **Supplementary Readings**
 
@@ -232,7 +235,8 @@ This document provides an outline of the topics, scripts and associated readings
 
 **Topics Covered**
 
--   Brief overview of advanced ML methods - NNets / Deep Learning
+-   Brief overview of advanced Supervised ML methods - NNets / Deep Learning
+-   Brief overview of Unsupervised Learning
 
 **Supplementary Readings**
 
