@@ -107,8 +107,9 @@ lapply(sample_sizes, draw_sample_mean)
 
 sapply(sample_sizes, draw_sample_mean)
 
-# without the function from aboe
-sapply()
+# without the function from above
+# Here we use x to define where to send each value
+sapply(sample_sizes, function(x) mean(rnorm(x))) 
 
 
 ## Simulate with the map function ----------------------------------------------
@@ -118,17 +119,18 @@ map(sample_sizes, draw_sample_mean)
 map_dbl(sample_sizes, draw_sample_mean)
 
 # without the function from above
-map()
+# Here we use ~ to define function and . to define where to send each value
+map(sample_sizes, ~mean(rnorm(.)))
 
 
 # using map with a tibble to store values
 tibble(n=sample_sizes) %>% 
-  mutate() %>% 
-  unnest()
+  mutate(sample_mean=map(n,draw_sample_mean)) %>% 
+  unnest(sample_mean)
 
 # without haveing to unnest
 tibble(n=sample_sizes) %>% 
-  mutate(map_dbl())
+  mutate(sample_mean=map_dbl(n,draw_sample_mean))
 
 
 
@@ -151,6 +153,9 @@ m <- 1000
 # note that we are applying the same sample size multiple times
 run_expirement <- function(sample_size,m){
   
+  trials <- 1:m
+  
+  sapply(trials, function(x) draw_sample_mean(n=sample_size))
   
 }
 
@@ -164,25 +169,25 @@ run_expirement(10,100)
 res <- list()
 
 for (i in 1:length(sample_sizes)){
-  
+  res[[i]] <- run_expirement(i,m)
 }
 
 res
 
 # using apply function ---------------------------------------------------------
 
-lapply()
+lapply(sample_sizes,function(x) run_expirement(x,m))
 
 # using map function -----------------------------------------------------------
 
-map() 
+map(sample_sizes, ~run_expirement(.,m)) 
 
 
 
 ## Visualize results ----------------------------------------------------------- 
 # Now let's take a quick peak at the results
 
-results_list <- map() 
+results_list <- map(sample_sizes, ~run_expirement(.,m)) 
 
 results_list %>% 
   enframe() %>% 
@@ -198,4 +203,18 @@ results_list %>%
 
 # Repeat the above steps but instead sample from a random uniform distribution
 
+run_expirement_unif <- function(sample_size,m){
+  
+  trials <- 1:m
+  
+  sapply(trials, function(x) mean(runif(n=sample_size)))
+  
+}
 
+map(sample_sizes,~run_expirement_unif(.,10000)) %>% 
+  enframe() %>% 
+  mutate(sample_size=sample_sizes) %>% 
+  unnest(value)  %>% 
+  ggplot(aes(value)) +
+  geom_density() +
+  facet_wrap(~sample_size)

@@ -190,3 +190,79 @@ document will be continually updated (check back frequently).
     and [7](https://csgillespie.github.io/efficientR/performance.html)
 
 # Part 2 - Resampling and Data Generation Appproaches
+
+## Day 13 - Tuesday
+
+**Topics Covered**
+
+-   Probability Theory Through simulation
+
+**Supplementary Readings**
+
+-   
+
+## Day 14 - Thursday
+
+**Topics Covered**
+
+-   Resampling Methods
+
+-   Bootstrap based confidence intervals
+
+-   Sample Size Estimation
+
+**Supplementary Readings**
+
+## Day 14 - Tuesday
+
+**Topics Covered**
+
+-   Data Generation
+
+-   Bias Evaluation
+
+**Supplementary Readings**
+
+-   
+
+## Day 15 - Thursday
+
+**Topics Covered**
+
+-   Predictive vs Explanatory Modeling
+
+-   Performance Evaluation
+
+**Supplementary Readings**
+
+## Day 16 - Tuesday
+
+**Topics Covered**
+
+-   ML Method 1 - KNN
+
+-   ML Method 2 - CART
+
+**Supplementary Readings**
+
+## Day 17- Thursday
+
+**Topics Covered**
+
+-   Ensemble approaches
+
+-   ML Method 3 - Random Forests
+
+**Supplementary Readings**
+
+## Day 17- Thursday
+
+**Topics Covered**
+
+-   Brief overview of advanced ML methods - NNets / Deep Learning
+
+**Supplementary Readings**
+
+-   
+
+# Section 3 - Equation-based models, Discrete Event Simulation and Agent/Individual-Based Models (ABMs/IBMs)
