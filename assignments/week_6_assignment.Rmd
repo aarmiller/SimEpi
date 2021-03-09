@@ -1,0 +1,312 @@
+---
+title: "Week6"
+author: "Aaron Miller"
+date: "3/8/2021"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+```{r echo=FALSE, messsage = FALSE, warning=FALSE}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(lubridate))
+```
+
+## Due Date: Tuesday 3/16/2021 by 5pm
+
+# Simulate admissions and discharges to a hospital setting
+
+For this assignment you will be building a simulation of admissions and discharges to a hospital setting. This simulation will randomly draw patients from the NHDS dataset representing new admissions to a hospital setting. This type of simulation could be used as part of a larger simulation model designed to simulate activities within a hospital setting. For example, this could be used inside an infectious disease model to simulate transmission of HAIs within a healthcare facility, or inside a model of healthcare interactions and resource utilization.
+
+### Load in the NHDS dataset and subset the data
+
+Start by loading the NHDS adult dataset that we have been working with in prior assignments:
+
+```{r}
+load("R/SimEpi/example_data/nhds_adult.RData")
+```
+
+Now create a subset called nhds_reduced that contains the following variables `age, sex, race, care_days, dx_adm, dx01, dx02, dx03, DRG, payor_primary, DRG, adm_type, adm_origin, dc_month, region, n_beds, hospital_ownership.` Rename `age_years` to `age`. This should look like the following:
+
+```{r, include = FALSE}
+nhds_reduced <- nhds_adult %>% 
+  select(age=age_years,sex,race,care_days,dx_adm,dx01,dx02,dx03,DRG,payor_primary,
+         DRG,adm_type,adm_origin,dc_month,region,n_beds,hospital_ownership)
+```
+
+```{r}
+nhds_reduced
+```
+
+### Set initial parameter values
+
+We want our simulation model to take a set of initial parameters that govern how the simulation operates. Specifically, we need to specify the range of dates for the simulation to run for (defined by the parameters `start_date` and `end_date`) and the size of the hospital in terms of the number of patient beds. Later we will consider extensions to these sets of parameters to make the simulation a bit more realistic. Here are the parameters (note there is nothing to do with this step, later we will pass these to our simulation function):
+
+```{r}
+start_date <- ymd("2019-01-01") # date for the start of the simulation
+end_date <- ymd("2019-12-31") # date for the end of the simulation
+hospital_size <- 300 # number of beds
+```
+
+### Draw an initial set of patients
+
+Write a function that takes an argument `n` that specifies the number of patients to draw and then returns a random sample of `n` total patients from the `nhds_reduced` dataset. Draw your sample with replacement. Call this function `draw_patients()`. Note: the function `sample_n()` from the dplyr package can be used to randomly draw a sample of size n from a given dataset.
+
+```{r}
+draw_patients <- function(n){
+  
+}
+```
+
+```{r, include = FALSE}
+draw_patients <- function(n){
+  sample_n(nhds_reduced,size = n,replace = TRUE)
+}
+```
+
+Confirm that your function is work and returns a random draw of the correct size each time.
+
+```{r}
+draw_patients(500)
+```
+
+Below you will use this function to draw the initial set of patients in the hospital and to draw new patients each time other patients are discharged and new patients are admitted. For example, if we wanted to create the initial set of patients in the hospital we could just draw all the patients we need based on the hospital size, defined above. Note: we will recycle this step inside the hospital simulation function below.
+
+```{r}
+init_hospital <- draw_patients(hospital_size)
+
+# view output
+init_hospital
+```
+
+Now try adding admission and discharge dates to the initial hospital you drew, call these variable `admdate` and `disdate`. Start by using the start date of the simulation as the initial admission date (later you will correct this since this will initially populate a hospital with patients all having the same admission date). How will you determine the discharge date (Hint: the information needed is in the dataset). Note: you will recycle this step later in the hospital simulation, you will also need to add admission and discharge dates each time you draw new patients.
+
+Your updated dataset should then look like the following:
+
+```{r, include=FALSE}
+init_hospital <- draw_patients(hospital_size) %>% 
+  mutate(admdate=start_date,
+         disdate=admdate+care_days)
+```
+
+```{r}
+init_hospital
+```
+
+### Discharge and Admit Patients
+
+Write a function called `discharge_admit_patients()` that takes two arguments: a hospital population of currently admitted patients (i.e., a subset extracted from the `nhds_reduced` dataset), and the current date. The function should then perform a number of tasks: (1) find patients who need to be discharged, based on the current date and the `disdate` defined for patients in the dataset, (2) draw a new set of patients to replace these discharges, (3) add `admdate` and `disdate` to the newly admitted patients, and (4) combine the existing patients who were not discharged along with the newly admitted patients to provide the update hospital setting.
+
+This function should return a list containing two elements: (1) the patients who were discharged from the hospital and (2) the updated hospital containing the newly admitted patients along with those who were not discharged. Here is a sketch of the function.
+
+```{r}
+discharge_admit_patients <- function(hospital,date){
+  
+  # find patients who are discharged
+  
+  
+  # subset hospital to patients who are not discharged
+
+  
+  # compute the number discharged
+  
+  
+  # draw new admissions and add admdate and disdate
+
+  
+  # rebuild hospital
+
+  # return updated hospital and discharged patients
+  return(list())
+  
+}
+
+```
+
+```{r, include = FALSE}
+discharge_admit_patients <- function(hospital,date){
+  
+  # patients_who are discharged
+  discharges <- hospital %>% 
+    filter(disdate<=date)
+  
+  # remove patients whose stay has ended 
+  new_hospital <- hospital %>% 
+    filter(disdate>date)
+  
+  # compute the number discharged
+  num_discharged <- nrow(hospital)-nrow(new_hospital)
+  
+  # draw new admissions and add admission & discharge date
+  new_patients <- draw_patients(num_discharged) %>% 
+    mutate(admdate=date,
+           disdate=date+care_days)
+  
+  # rebuild hospital
+  new_hospital <- bind_rows(new_hospital,new_patients)
+  
+  return(list(hospital=new_hospital,
+              discharges=discharges))
+  
+}
+```
+
+Test that your function works by running it on the initial hospital you built above and then advancing the start date by 1.
+
+```{r}
+discharge_admit_patients(init_hospital,start_date+1) 
+```
+
+## Run Simulation
+
+Write a function called `sim_hospital()` that simulates a hospital environment across time using the steps and the functions we just wrote. This function should perform the following operations:
+
+-   Load an initial set of patients using the `draw_patients()` function and create their `admdate` and `disdate`
+
+-   Create place holders to store the patient data for all patients who are discharged - note this will allow you to track all patients who passed through the simulator
+
+-   Create place holders to store any other metrics you would like to collect on the state of the simulation across the different date. For now we will compute the **mean age** and **mean LOS** of patients on a given date.
+
+-   Perform a loop across all remaining days in the simulation (i.e., `start_date+1` through `end_date`) that does each of the following
+
+    -   Update the state of the hospital by discharging and admitting patients on that particular date
+
+    -   Add discharged patients into the placeholder containing all prior discharges
+
+    -   Compute mean age and mean LOS of the currently admitted patients on a particular day, add this information to the corresponding placeholder
+
+Your simulation should then return a list containing three elements: (1) all discharges that occurred in the simulation, (2) the current state of the hospital (i.e. patients that are admitted on the final day), and (3) the computed statistics across each day in the simulation. Here is a sketch of how this function might look:
+
+```{r}
+sim_hospital <- function(start_date,end_date,hospital_size){
+  
+  # Build the inital hospital, including the initial 
+
+  
+  # create any placeholders needed for the loop
+
+  
+  # Loop over - to run this you will need to determine and create a variable total_days
+  # to tally how many days to simulate over
+  
+  for (i in 1:total_sim_days){
+    
+    # admit and discharge patients
+    
+    # update hospital
+    
+    # store the discharges
+    
+    # compute statistics for the current state of the hospital
+    
+  }
+  
+  # return the following
+  # The dataset of all patients that passed through the simulation
+  # Statistics across days in the simulation for the state of the hospital
+  return(list())
+  
+}
+```
+
+```{r,include=FALSE}
+sim_hospital <- function(start_date,end_date,hospital_size){
+  
+  # Build the inital hospital, including the initial 
+  current_hospital <- draw_patients(hospital_size) %>% 
+    mutate(admdate=start_date,
+           disdate=admdate+care_days)
+  
+  # create any placeholders needed for the loop
+  all_discharges <- list()
+  daily_stats <- tibble()
+  
+  # Loop over - to run this you will need to determine and create a variable total_days
+  # to tally how many days to simulate over
+  total_days <- as.integer(end_date-start_date)
+  
+  for (i in 1:total_days){
+    
+    # admit and discharge patients
+    update_res <- discharge_admit_patients(hospital = current_hospital,
+                                           date = start_date+i) 
+    
+    # update hospital
+    current_hospital <- update_res$hospital
+    
+    # store the discharges
+    all_discharges[[i]] <- update_res$discharges
+    
+    # compute statistics for the current state of the hospital
+    add_stats <- current_hospital %>% 
+      summarise(mean_age=mean(age,na.rm=TRUE),
+                mean_los=mean(care_days,na.rm=TRUE)) %>% 
+      mutate(date=start_date+i)
+    
+    daily_stats <- bind_rows(daily_stats,add_stats)
+    
+  }
+  
+  # return the following
+  # The dataset of all patients that passed through the simulation
+  # Statistics across days in the simulation for the state of the hospital
+  list(discharges=all_discharges,
+       final_hospital=current_hospital,
+       daily_stats=daily_stats)
+  
+}
+
+```
+
+Test your function by running it over the parameters you specified above
+
+```{r}
+sim_res <- sim_hospital(start_date = start_date,
+                        end_date = end_date,
+                        hospital_size = hospital_size)
+```
+
+## Compute some statistics
+
+Now try running you simulation and visualizing some of the output. For example you could visualize the average age of all patients that were in the hospital on a particular day:
+
+```{r, echo = FALSE}
+sim_res$daily_stats %>% 
+  ggplot(aes(date,mean_age)) +
+  geom_line()
+```
+
+Or you could visualize the average los for the patients that were in the hospital on a given day. Note: your graph will look different than mine (because this is stochastic), but think about why we are getting this major shift upward:
+
+```{r, echo = FALSE}
+sim_res$daily_stats %>% 
+  ggplot(aes(date,mean_los)) +
+  geom_line()
+```
+
+## Extra Considerations - Try these if you have time
+
+The following are extensions to this basic simulation. If you have time, I would recommend giving these a try. Each of these will allow us to make the simulation a bit more realistic.
+
+### Specify the type of hospital setting
+
+There are different types of hospitals represented in the dataset (e.g., hospital region, number of beds and ownership). You may want to add parameters to draw patients only from those hospitals that are similar to the type of hospital you are trying to simulate. For example, maybe you want to draw admissions from the same type of region, or from hospitals with the same type of ownership.
+
+```{r}
+nhds_adult %>% count(region,n_beds,hospital_ownership)
+```
+
+### Draw patients according to the admission/discharge month
+
+Some types of diseases and admissions are more seasonal than others (e.g., more/less likely to occur in winter compared to summer). The NHDS dataset contains a variable for the discharge month. Try drawing patients for a corresponding admission date based on this information.
+
+### Pick a non-uniform start date
+
+Currently the stimulation populates the hospital with a set of patients all having the same admission date. Try updating this so that the admission date is within some small range of the initial start date of the simulation. For example maybe each patient admitted, their admission date is randomly drawn between 1 and x, where x is their LOS or care_days.
+
+### Hospital over/under capacity
+
+The way we have setup the simulator, the hospital is always at full capacity and we immediately draw a new patient for each patient that is discharged. Consider making number number of new arrivals stochastic in some way. For example, you might draw new patients using a poisson distribution where the mean is set to the number of patients discharged.
