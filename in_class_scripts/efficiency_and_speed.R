@@ -244,15 +244,20 @@ microbenchmark(fib_R(20),        # The R recursive function
 
 library(lubridate)
 load("R/SimEpi/example_data/longitudinal_example_data.RData")
+longitudinal
 
 # function to compute the number of visits in the "days_since" previous days
 count_prior_visits <- function(x,days_since){
   n = length(x)  # number of visits to loop over
   
   n_visits <- vector("integer",n)
+  # out loop is for the current date we are looking at
   for (i in 1:n){
     n_visits[i] <- 0
+    # inner loop is over all other visits
     for (j in 1:n){
+      # 1st condition - prior visit is within days-since prior
+      # 2nd condition - prior visit is less than current date
       if (((x[i]-days_since) < x[j]) & x[j] <x[i]) {
         n_visits[i] <- n_visits[i] + 1
       }
@@ -263,8 +268,9 @@ count_prior_visits <- function(x,days_since){
 
 # count number of visits in the prior 60 days
 long_test %>% 
-  arrange(date) %>% 
-  mutate(n_prior=count_prior_visits(date,60))
+  #arrange(date) %>% 
+  mutate(n_prior=count_prior_visits(date,60)) %>% 
+  arrange(date)
 
 longitudinal %>%
   slice(1:10000) %>%  # slice so this does not take forever to run
@@ -319,6 +325,7 @@ rand_correlation <- function(size){
 
 # test the function
 rand_correlation(50)
+rand_correlation(500)
 
 # now suppose we want to run this 20,000 time (i.e., number of expirements) and 
 # each time we want to check the correlation for 5,000 random values
@@ -334,7 +341,10 @@ library(parallel)
 # number of physical CPU cores and not hyper-threading)
 num_cores <- detectCores(logical = FALSE)
 
+mclapply(1:20000,function(x) rand_correlation(5000), mc.cores = num_cores)
+
 # now compare a profile of the performance
+library(microbenchmark)
 microbenchmark(lapply(1:20000,function(x) rand_correlation(5000)),
                mclapply(1:20000,function(x) rand_correlation(5000), mc.cores = num_cores),
                times = 5)

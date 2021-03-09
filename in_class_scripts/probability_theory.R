@@ -1,7 +1,7 @@
 
 library(tidyverse)
 #####
-## This script provides some examples for understraning probability theory
+## This script provides some examples for understanding probability theory
 ## using simulation models
 
 
@@ -32,7 +32,7 @@ single_trial <- function(n, p = 0.5){
 single_trial(10)
 
 # plot results of single trial
-single_trial(100) %>% 
+single_trial(1000) %>% 
   ggplot(aes(toss,prob_est)) +
   geom_line() +
   geom_hline(aes(yintercept = 0.5),color="red")
