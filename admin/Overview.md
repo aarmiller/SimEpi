@@ -208,27 +208,39 @@ document will be continually updated (check back frequently).
 
 **Topics Covered**
 
--   Resampling Methods
+-   Catch-up on material
 
--   Bootstrap based confidence intervals
-
--   Sample Size Estimation
+-   Review prior simulations Assignments
 
 **Supplementary Readings**
 
-## Day 14 - Tuesday
+## Days 14/15 - Tuesday & Thursday
 
 **Topics Covered**
 
--   Data Generation
+-   Resampling Methods
+
+-   Bootstrap-based confidence intervals & p-values
 
 -   Bias Evaluation
+
+    -   Non-differential misclassification
+
+    -   Empirical application CFTR
+
+-   Sample Size Estimation
+
+    -   Thermometer-based screening
+
+<!-- -->
+
+-   Data Generation
 
 **Supplementary Readings**
 
 -   
 
-## Day 15 - Thursday
+## Day 16 - Tuesday
 
 **Topics Covered**
 
@@ -242,7 +254,7 @@ document will be continually updated (check back frequently).
 
 -   ISLR - Chapter ()
 
-## Day 16 - Tuesday
+## Day 17 - Thursday
 
 **Topics Covered**
 
@@ -252,7 +264,7 @@ document will be continually updated (check back frequently).
 
 **Supplementary Readings**
 
-## Day 17- Thursday
+## Day 18- Tuesday
 
 **Topics Covered**
 
@@ -262,7 +274,7 @@ document will be continually updated (check back frequently).
 
 **Supplementary Readings**
 
-## Day 17- Thursday
+## Day 19 - Tuesday
 
 **Topics Covered**
 
