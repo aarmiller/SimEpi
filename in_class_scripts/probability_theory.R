@@ -37,21 +37,6 @@ single_trial(1000) %>%
   geom_line() +
   geom_hline(aes(yintercept = 0.5),color="red")
 
-# replicate results
-sim_coin <- function(n, p = 0.5, replicates = 1){
-  
-  tibble(repl=as.factor(1:replicates)) %>% 
-    mutate(sim_res=map(repl,~single_trial(n=n,0.5))) %>% 
-    unnest(sim_res)
-  
-}
-
-
-sim_coin(10000,replicates = 100) %>% 
-  ggplot(aes(toss,prob_est,order = repl)) +
-  geom_line() +
-  geom_hline(aes(yintercept = 0.5),color="red")
-
 
 ## Replicate Simulations -------------------------------------------------------
 sim_coin <- function(n, p = 0.5, replicates = 1){
@@ -63,10 +48,21 @@ sim_coin <- function(n, p = 0.5, replicates = 1){
 }
 
 
-sim_coin(10000,replicates = 100) %>% 
+sim_res <- sim_coin(10000,replicates = 100) 
+
+sim_res %>% 
+  ggplot(aes(toss,prob_est,order = repl)) +
+  geom_line() +
+  geom_hline(aes(yintercept = 0.5),color="red")
+
+
+sim_res <- sim_res %>% 
   group_by(toss) %>% 
   mutate(upr = quantile(prob_est,probs=0.975),
             lwr = quantile(prob_est,probs=0.025)) %>% 
+  ungroup()
+
+sim_res %>% 
   ggplot(aes(toss,prob_est,order = repl)) +
   geom_line() +
   geom_hline(aes(yintercept = 0.5),color="red") +
@@ -174,14 +170,14 @@ clt_sim <- function(n = 10, trials = 2){
 
 # Draw sample size = 2 random values, compute the mean, and repeat this 
 # experiment 1000 times
-pdf(file = "figs/prob_theory/clt_n2.pdf",width = 10,height = 6)
+#pdf(file = "figs/prob_theory/clt_n2.pdf",width = 10,height = 6)
 clt_sim(n=2,trials=1000) %>% 
   pivot_longer(cols = normal:beta,names_to = "distribution") %>% 
   ggplot(aes(x=value)) +
   geom_histogram(bins = 20) +
   facet_wrap(~distribution,scales = "free") +
   ggtitle("Sample Size 2")
-dev.off()
+#dev.off()
 
 # Draw sample size = 10 random values, compute the mean, and repeat this 
 # experiment 1000 times
