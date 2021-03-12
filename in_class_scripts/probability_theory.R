@@ -62,6 +62,8 @@ sim_res <- sim_res %>%
             lwr = quantile(prob_est,probs=0.025)) %>% 
   ungroup()
 
+sim_res %>% filter(toss==10)
+
 sim_res %>% 
   ggplot(aes(toss,prob_est,order = repl)) +
   geom_line() +
@@ -85,7 +87,8 @@ sample_sizes <- c(10,20,40,80,500,1000,5000,10000)
 
 #pdf(file = "figs/prob_theory/LLN_fig.pdf",width = 10,height = 5)
 tibble(sample_size = sample_sizes) %>% 
-  mutate(sim_res = map(sample_size,~flip_many(flips = ., repl = 10000))) %>% 
+  mutate(sim_res = map(sample_size,
+                       ~flip_many(flips = ., repl = 10000))) %>% 
   unnest(sim_res) %>% 
   ggplot(aes(sim_res)) +
   geom_histogram(bins = 100) +
@@ -166,6 +169,8 @@ clt_sim <- function(n = 10, trials = 2){
     unnest(res)
 }
 
+clt_sim(n=2,trials=1000)
+
 ## plot results demonstrating the central limit theorem ------------------------
 
 # Draw sample size = 2 random values, compute the mean, and repeat this 
@@ -245,7 +250,7 @@ clt_sim(n=100,trials=1000,estimator = "median") %>%
 
 
 ## Experiment 1 - Confirm Interpretation of CI ---------------------------------
-alpha <- .05   # level of signifigance 
+alpha <- .05   # level of significance 
 zval <- qnorm(1-alpha/2)  # z-value to be used for computing the CI
 
 # function to draw a random sample and compute sample CI
@@ -258,6 +263,7 @@ sample_norm <- function(n){
   tibble(low = mean_draw - sample_bound, 
          high = mean_draw + sample_bound)
 }
+sample_norm(10000)
 
 # Count the number of times the simulated confidence interval contained the 
 # true value
