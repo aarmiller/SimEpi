@@ -99,16 +99,16 @@ draw_patients(500)
     ## # A tibble: 500 x 16
     ##      age sex   race  care_days dx_adm dx01  dx02  dx03  DRG   payor_primary
     ##    <int> <fct> <fct>     <int> <icd9> <icd> <icd> <icd> <chr> <fct>        
-    ##  1    44 fema… white         4 78609  5569  311-  V5869 387   HMO or PPO   
-    ##  2    35 male  not_…         5 30390  30390 29189 <NA>  897   self pay     
-    ##  3    52 male  white         1 7842   99565 25000 496-  916   self pay     
-    ##  4    45 fema… white         3 1749   1744  1963  6988  580   blue cross b…
-    ##  5    75 fema… black        16 V5789  V5789 43820 5856  945   Medicare     
-    ##  6    25 fema… not_…         3 <NA>   V270  64822 2859  775   Medicaid     
-    ##  7    87 fema… other         4 81200  81203 486-  5119  562   Medicare     
-    ##  8    20 fema… white         2 V220   V270  64811 2449  775   HMO or PPO   
-    ##  9    62 fema… black         5 49121  49121 4010  4659  191   blue cross b…
-    ## 10    76 fema… white         8 8052   5180  V0382 41401 168   Medicare     
+    ##  1    65 male  white        12 78097  2920  8602  80709 894   Medicare     
+    ##  2    38 fema… not_…         3 <NA>   0479  <NA>  <NA>  076   HMO or PPO   
+    ##  3    46 fema… white         1 <NA>   41071 5856  4280  280   Medicare     
+    ##  4    82 fema… white        11 <NA>   0389  486-  51881 871   Medicare     
+    ##  5    66 fema… white         5 5789   53551 2851  28989 378   Medicare     
+    ##  6    40 fema… white         7 5789   41071 5770  5849  280   Medicaid     
+    ##  7    81 male  white         3 5990   5989  5990  2875  697   HMO or PPO   
+    ##  8    54 male  white         3 71536  71536 2720  4019  470   HMO or PPO   
+    ##  9    73 fema… other         1 53550  53550 28860 4019  392   Medicare     
+    ## 10    19 male  white         1 311-   29570 V6284 311-  885   blue cross b…
     ## # … with 490 more rows, and 6 more variables: adm_type <fct>, adm_origin <fct>,
     ## #   dc_month <int>, region <fct>, n_beds <ord>, hospital_ownership <fct>
 
@@ -130,16 +130,16 @@ init_hospital
     ## # A tibble: 300 x 16
     ##      age sex   race  care_days dx_adm dx01  dx02  dx03  DRG   payor_primary
     ##    <int> <fct> <fct>     <int> <icd9> <icd> <icd> <icd> <chr> <fct>        
-    ##  1    31 fema… not_…         3 V222   V270  65421 <NA>  766   Medicaid     
-    ##  2    46 male  white         2 <NA>   72252 7213  <NA>  460   other govern…
-    ##  3    79 male  white        15 41401  41401 5601  6826  234   Medicare     
-    ##  4    69 male  not_…         3 5849   5849  5770  5601  682   Medicare     
-    ##  5    77 fema… white         1 78609  9221  E8859 78609 605   HMO or PPO   
-    ##  6    73 male  not_…        16 2111   41511 5185  2766  981   Medicare     
-    ##  7    81 fema… not_…         4 71536  71536 4019  2724  470   Medicare     
-    ##  8    26 fema… white         2 V221   V270  66401 66481 775   blue cross b…
-    ##  9    76 male  white         9 <NA>   53783 42832 4352  378   Medicare     
-    ## 10    82 fema… white         2 <NA>   53011 V146  4019  392   Medicare     
+    ##  1    82 fema… white         1 <NA>   2761  7802  5990  641   Medicare     
+    ##  2    63 male  white         1 78909  5609  4019  2270  390   blue cross b…
+    ##  3    90 fema… white         3 <NA>   82009 2851  E8889 481   Medicare     
+    ##  4    37 fema… black         2 25013  25013 V5867 2809  639   self pay     
+    ##  5    79 fema… white        19 78900  56081 42843 5185  329   Medicare     
+    ##  6    44 fema… white         2 78650  496-  78650 4019  192   HMO or PPO   
+    ##  7    52 fema… black         4 <NA>   25092 2761  V0481 638   Medicaid     
+    ##  8    21 fema… white         2 65971  V270  66411 65971 775   Medicaid     
+    ##  9    47 male  not_…         9 7295   92710 95891 25002 908   worker compe…
+    ## 10    57 fema… white         2 29690  29690 2720  3019  885   other privat…
     ## # … with 290 more rows, and 6 more variables: adm_type <fct>, adm_origin <fct>,
     ## #   dc_month <int>, region <fct>, n_beds <ord>, hospital_ownership <fct>
 
@@ -168,16 +168,16 @@ init_hospital
     ## # A tibble: 300 x 18
     ##      age sex   race  care_days dx_adm dx01  dx02  dx03  DRG   payor_primary
     ##    <int> <fct> <fct>     <int> <icd9> <icd> <icd> <icd> <chr> <fct>        
-    ##  1    71 male  white         2 79439  42731 5853  40390 287   blue cross b…
-    ##  2    65 male  white         2 78659  42731 25092 V433  310   Medicare     
-    ##  3    27 fema… white         2 65641  V271  65641 64891 775   HMO or PPO   
-    ##  4    40 fema… white         2 29570  29570 30183 34590 885   Medicare     
-    ##  5    68 fema… white         1 4111   41401 78659 42769 287   Medicare     
-    ##  6    89 male  white         5 78605  486-  5849  49121 193   other govern…
-    ##  7    37 fema… black         2 2189   2180  2181  2182  743   other privat…
-    ##  8    53 male  white         3 71536  71536 412-  4280  470   Medicaid     
-    ##  9    33 male  white         1 27800  27801 6826  V854  620   HMO or PPO   
-    ## 10    40 male  white         2 4599   44422 25002 4439  238   self pay     
+    ##  1    79 fema… white         5 82021  82021 73313 2851  481   Medicare     
+    ##  2    59 male  asian         1 41401  41401 4111  2724  249   blue cross b…
+    ##  3    62 fema… white         4 78039  07054 78039 4019  443   blue cross b…
+    ##  4    60 male  black         3 78900  5601  5990  5589  389   other privat…
+    ##  5    62 male  white         2 78079  03849 78552 5849  853   Medicare     
+    ##  6    77 fema… white         3 7802   29590 7804  7802  885   Medicare     
+    ##  7    78 fema… black         2 <NA>   3383  179-  1991  948   Medicare     
+    ##  8    73 fema… not_…         2 6826   6826  5849  27650 602   Medicare     
+    ##  9    35 fema… white         3 311-   29632 V6284 25000 885   Medicaid     
+    ## 10    23 fema… white         1 650-   V270  650-  <NA>  775   Medicaid     
     ## # … with 290 more rows, and 8 more variables: adm_type <fct>, adm_origin <fct>,
     ## #   dc_month <int>, region <fct>, n_beds <ord>, hospital_ownership <fct>,
     ## #   admdate <date>, disdate <date>
@@ -239,35 +239,35 @@ discharge_admit_patients(init_hospital,start_date+1)
     ## # A tibble: 300 x 18
     ##      age sex   race  care_days dx_adm dx01  dx02  dx03  DRG   payor_primary
     ##    <int> <fct> <fct>     <int> <icd9> <icd> <icd> <icd> <chr> <fct>        
-    ##  1    71 male  white         2 79439  42731 5853  40390 287   blue cross b…
-    ##  2    65 male  white         2 78659  42731 25092 V433  310   Medicare     
-    ##  3    27 fema… white         2 65641  V271  65641 64891 775   HMO or PPO   
-    ##  4    40 fema… white         2 29570  29570 30183 34590 885   Medicare     
-    ##  5    89 male  white         5 78605  486-  5849  49121 193   other govern…
-    ##  6    37 fema… black         2 2189   2180  2181  2182  743   other privat…
-    ##  7    53 male  white         3 71536  71536 412-  4280  470   Medicaid     
-    ##  8    40 male  white         2 4599   44422 25002 4439  238   self pay     
-    ##  9    71 male  white         2 71536  71536 2851  2720  470   Medicare     
-    ## 10    47 male  black         3 <NA>   042-  6826  1761  977   HMO or PPO   
+    ##  1    79 fema… white         5 82021  82021 73313 2851  481   Medicare     
+    ##  2    62 fema… white         4 78039  07054 78039 4019  443   blue cross b…
+    ##  3    60 male  black         3 78900  5601  5990  5589  389   other privat…
+    ##  4    62 male  white         2 78079  03849 78552 5849  853   Medicare     
+    ##  5    77 fema… white         3 7802   29590 7804  7802  885   Medicare     
+    ##  6    78 fema… black         2 <NA>   3383  179-  1991  948   Medicare     
+    ##  7    73 fema… not_…         2 6826   6826  5849  27650 602   Medicare     
+    ##  8    35 fema… white         3 311-   29632 V6284 25000 885   Medicaid     
+    ##  9    63 fema… white         3 78701  1629  1983  1987  181   other privat…
+    ## 10    23 fema… not_…         4 V222   V270  66481 65841 775   Medicaid     
     ## # … with 290 more rows, and 8 more variables: adm_type <fct>, adm_origin <fct>,
     ## #   dc_month <int>, region <fct>, n_beds <ord>, hospital_ownership <fct>,
     ## #   admdate <date>, disdate <date>
     ## 
     ## $discharges
-    ## # A tibble: 67 x 18
+    ## # A tibble: 50 x 18
     ##      age sex   race  care_days dx_adm dx01  dx02  dx03  DRG   payor_primary
     ##    <int> <fct> <fct>     <int> <icd9> <icd> <icd> <icd> <chr> <fct>        
-    ##  1    68 fema… white         1 4111   41401 78659 42769 287   Medicare     
-    ##  2    33 male  white         1 27800  27801 6826  V854  620   HMO or PPO   
-    ##  3    88 fema… white         1 9729   9729  9720  96569 918   Medicare     
-    ##  4    54 fema… not_…         1 49122  49122 4254  2761  191   other privat…
-    ##  5    62 fema… black         1 <NA>   25002 78659 2767  639   blue cross b…
-    ##  6    52 fema… white         1 <NA>   62133 71536 <NA>  743   other privat…
-    ##  7    20 fema… white         1 7840   34692 6253  78340 103   Medicaid     
-    ##  8    66 fema… white         1 49120  32723 7873  4928  156   Medicare     
-    ##  9    42 male  white         1 <NA>   6826  2869  8911  603   other govern…
-    ## 10    27 fema… white         1 29620  29623 V6284 34590 885   blue cross b…
-    ## # … with 57 more rows, and 8 more variables: adm_type <fct>, adm_origin <fct>,
+    ##  1    59 male  asian         1 41401  41401 4111  2724  249   blue cross b…
+    ##  2    23 fema… white         1 650-   V270  650-  <NA>  775   Medicaid     
+    ##  3    59 male  white         1 7210   7210  V641  42731 552   HMO or PPO   
+    ##  4    74 fema… white         1 78650  2724  78650 2443  642   Medicare     
+    ##  5    74 male  white         1 7802   42731 7802  V5861 310   Medicare     
+    ##  6    47 male  not_…         1 7231   7224  7220  V1582 473   other govern…
+    ##  7    56 fema… white         1 27801  27801 V854  4019  621   HMO or PPO   
+    ##  8    46 male  black         1 4019   5589  4019  3051  392   Medicare     
+    ##  9    70 male  white         1 185-   185-  4019  2724  708   Medicare     
+    ## 10    41 fema… other         1 <NA>   3090  V6284 4019  881   other govern…
+    ## # … with 40 more rows, and 8 more variables: adm_type <fct>, adm_origin <fct>,
     ## #   dc_month <int>, region <fct>, n_beds <ord>, hospital_ownership <fct>,
     ## #   admdate <date>, disdate <date>
 
@@ -413,12 +413,213 @@ nhds_adult %>% count(region,n_beds,hospital_ownership)
     ## 10 midwest   6-99    government           145
     ## # … with 29 more rows
 
+**POSSIBLE SOLUTION**
+
+The `draw_patients()` function is the function that is used to interact
+with and draw patients from the `nhds_reduced` dataset. The easiest way
+to specify the type of hospital setting to draw patients from is to
+update the `draw_patients()` function to incorporate a data argument
+that specifies which patients (e.g., regions, hospitals, etc.) to draw
+from in the original dataset. You can then filter the dataset before
+calling the functions and pass the filtered dataset to the sim
+functions. Of course, once you update `draw_patients()` you also have to
+update the corresponding functions that also rely on `draw_patients()`
+to pass a filtered dataset.
+
+Here I have updated each of the corresponding functions and have also
+specified `nhds_reduced` as the default dataset. Thus, if I do not
+specify how to filter the datasets, this function will work as before.
+
+``` r
+draw_patients <- function(n,patient_population = nhds_reduced){
+  sample_n(patient_population,size = n,replace = TRUE)
+}
+
+discharge_admit_patients <- function(hospital,date, patient_population = nhds_reduced){
+  
+  # patients_who are discharged
+  discharges <- hospital %>% 
+    filter(disdate<=date)
+  
+  # remove patients whose stay has ended 
+  new_hospital <- hospital %>% 
+    filter(disdate>date)
+  
+  # compute the number discharged
+  num_discharged <- nrow(hospital)-nrow(new_hospital)
+  
+  # draw new admissions and add admission & discharge date
+  new_patients <- draw_patients(num_discharged, 
+                                patient_population = patient_population) %>% 
+    mutate(admdate=date,
+           disdate=date+care_days)
+  
+  # rebuild hospital
+  new_hospital <- bind_rows(new_hospital,new_patients)
+  
+  return(list(hospital=new_hospital,
+              discharges=discharges))
+  
+}
+
+
+sim_hospital <- function(start_date,end_date,hospital_size,
+                         patient_population = nhds_reduced){
+  
+  # Build the inital hospital, including the initial 
+  current_hospital <- draw_patients(hospital_size,
+                                    patient_population = patient_population) %>% 
+    mutate(admdate=start_date,
+           disdate=admdate+care_days)
+  
+  # create any placeholders needed for the loop
+  all_discharges <- list()
+  daily_stats <- tibble()
+  
+  # Loop over - to run this you will need to determine and create a variable total_days
+  # to tally how many days to simulate over
+  total_days <- as.integer(end_date-start_date)
+  
+  for (i in 1:total_days){
+    
+    # admit and discharge patients
+    update_res <- discharge_admit_patients(hospital = current_hospital,
+                                           date = start_date+i,
+                                           patient_population = patient_population) 
+    
+    # update hospital
+    current_hospital <- update_res$hospital
+    
+    # store the discharges
+    all_discharges[[i]] <- update_res$discharges
+    
+    # compute statistics for the current state of the hospital
+    add_stats <- current_hospital %>% 
+      summarise(mean_age=mean(age,na.rm=TRUE),
+                mean_los=mean(care_days,na.rm=TRUE)) %>% 
+      mutate(date=start_date+i)
+    
+    daily_stats <- bind_rows(daily_stats,add_stats)
+    
+  }
+  
+  # return the following
+  # The dataset of all patients that passed through the simulation
+  # Statistics across days in the simulation for the state of the hospital
+  list(discharges=all_discharges,
+       final_hospital=current_hospital,
+       daily_stats=daily_stats)
+  
+}
+```
+
 ### Draw patients according to the admission/discharge month
 
 Some types of diseases and admissions are more seasonal than others
 (e.g., more/less likely to occur in winter compared to summer). The NHDS
 dataset contains a variable for the discharge month. Try drawing
 patients for a corresponding admission date based on this information.
+
+POSSIBLE SOLUTION
+
+Again we can update the `draw_patients()` function to incorporate an
+argument for the admission month (here `adm_month`). Then before drawing
+patients we would filter the dataset to `dc_month == adm_month`. (Note:
+the admission and discharge months may differ slightly but I am ignoring
+that complexity here). Also, again you will have to update the functions
+that rely on `draw_patients()`.
+
+``` r
+draw_patients <- function(n,patient_population = nhds_reduced, adm_month = NULL){
+  if (is.null(adm_month)){
+    sample_n(patient_population,size = n,replace = TRUE)
+  } else {
+    patient_population %>% 
+      filter(dc_month==adm_month) %>% 
+      sample_n(size = n, replace = TRUE)
+  }
+  
+}
+
+discharge_admit_patients <- function(hospital,date, patient_population = nhds_reduced){
+  
+  # patients_who are discharged
+  discharges <- hospital %>% 
+    filter(disdate<=date)
+  
+  # remove patients whose stay has ended 
+  new_hospital <- hospital %>% 
+    filter(disdate>date)
+  
+  # compute the number discharged
+  num_discharged <- nrow(hospital)-nrow(new_hospital)
+  
+  # draw new admissions and add admission & discharge date
+  new_patients <- draw_patients(num_discharged, 
+                                patient_population = patient_population,
+                                adm_month = lubridate::month(date)) %>% 
+    mutate(admdate=date,
+           disdate=date+care_days)
+  
+  # rebuild hospital
+  new_hospital <- bind_rows(new_hospital,new_patients)
+  
+  return(list(hospital=new_hospital,
+              discharges=discharges))
+  
+}
+
+
+sim_hospital <- function(start_date,end_date,hospital_size,
+                         patient_population = nhds_reduced){
+  
+  # Build the inital hospital, including the initial 
+  current_hospital <- draw_patients(hospital_size,
+                                    patient_population = patient_population,
+                                    adm_month = lubridate::month(start_date)) %>% 
+    mutate(admdate=start_date,
+           disdate=admdate+care_days)
+  
+  # create any placeholders needed for the loop
+  all_discharges <- list()
+  daily_stats <- tibble()
+  
+  # Loop over - to run this you will need to determine and create a variable total_days
+  # to tally how many days to simulate over
+  total_days <- as.integer(end_date-start_date)
+  
+  for (i in 1:total_days){
+    
+    # admit and discharge patients
+    update_res <- discharge_admit_patients(hospital = current_hospital,
+                                           date = start_date+i,
+                                           patient_population = patient_population) 
+    
+    # update hospital
+    current_hospital <- update_res$hospital
+    
+    # store the discharges
+    all_discharges[[i]] <- update_res$discharges
+    
+    # compute statistics for the current state of the hospital
+    add_stats <- current_hospital %>% 
+      summarise(mean_age=mean(age,na.rm=TRUE),
+                mean_los=mean(care_days,na.rm=TRUE)) %>% 
+      mutate(date=start_date+i)
+    
+    daily_stats <- bind_rows(daily_stats,add_stats)
+    
+  }
+  
+  # return the following
+  # The dataset of all patients that passed through the simulation
+  # Statistics across days in the simulation for the state of the hospital
+  list(discharges=all_discharges,
+       final_hospital=current_hospital,
+       daily_stats=daily_stats)
+  
+}
+```
 
 ### Pick a non-uniform start date
 
@@ -429,6 +630,108 @@ the simulation. For example maybe each patient admitted, their admission
 date is randomly drawn between 1 and x, where x is their LOS or
 care\_days.
 
+POSSIBLE SOLUTION
+
+Before when we drew the initial set of patients we set the admission
+date to be the start date of the simulation. Now we need to pick a day
+at or prior to the current date. To do so, we can sample from the range
+of possible that a patient may have been admitted. We know each
+patient’s total care days. So if we sample from the values 1:care\_days
+we can draw an index to subtract from the current date. The easiest way
+to do this is to draw uniformly from the values over the interval
+`[1, care_days]`, then subtract 1 (so we get starts on the current
+date), and then subtract this value from the current date.
+
+Here is a quick example to demonstrate how this should work. Recall from
+the lecture notes that if you take the ceiling of a uniform random
+number multiplied by some value `b` then you will have uniform discrete
+values over the interval \[1,b\].
+
+``` r
+start_date <- ymd("2019-01-01")
+  
+# get a batch of 10 patients
+tmp <- draw_patients(10)
+
+# draw from a random uniform over [1, care_days] then subtract 1 so that we get some startes
+# on the same date
+start_index <- ceiling(tmp$care_days*runif(10)) - 1
+
+# update the index date
+tmp %>% 
+  mutate(admdate = start_date-start_index)
+```
+
+    ## # A tibble: 10 x 17
+    ##      age sex   race  care_days dx_adm dx01  dx02  dx03  DRG   payor_primary
+    ##    <int> <fct> <fct>     <int> <icd9> <icd> <icd> <icd> <chr> <fct>        
+    ##  1    74 fema… white         2 78459  43491 42832 7843  065   Medicare     
+    ##  2    87 fema… white         6 6826   8921  6826  4019  902   Medicare     
+    ##  3    57 male  white         4 2354   2118  4592  <NA>  357   HMO or PPO   
+    ##  4    62 fema… white        21 1744   V580  1744  <NA>  849   other privat…
+    ##  5    32 fema… not_…         2 V221   V270  64881 66401 775   HMO or PPO   
+    ##  6    72 fema… white         1 <NA>   38600 25000 34690 134   Medicare     
+    ##  7    71 fema… white         7 514-   42831 51881 486-  291   Medicare     
+    ##  8    49 male  white         1 27401  27401 4019  27800 554   not stated   
+    ##  9    66 fema… white         9 V5789  V5789 2851  72402 945   other privat…
+    ## 10    71 male  not_…         4 42731  42731 5849  42732 308   Medicare     
+    ## # … with 7 more variables: adm_type <fct>, adm_origin <fct>, dc_month <int>,
+    ## #   region <fct>, n_beds <ord>, hospital_ownership <fct>, admdate <date>
+
+And here is how you update the simulation to get this to work:
+
+``` r
+sim_hospital <- function(start_date,end_date,hospital_size,
+                         patient_population = nhds_reduced){
+  
+  # Build the inital hospital, including the initial 
+  current_hospital <- draw_patients(hospital_size,
+                                    patient_population = patient_population,
+                                    adm_month = lubridate::month(start_date)) %>% 
+    mutate(admdate= start_date - (ceiling(tmp$care_days*runif(hospital_size)) - 1),
+           disdate=admdate+care_days)
+  
+  # create any placeholders needed for the loop
+  all_discharges <- list()
+  daily_stats <- tibble()
+  
+  # Loop over - to run this you will need to determine and create a variable total_days
+  # to tally how many days to simulate over
+  total_days <- as.integer(end_date-start_date)
+  
+  for (i in 1:total_days){
+    
+    # admit and discharge patients
+    update_res <- discharge_admit_patients(hospital = current_hospital,
+                                           date = start_date+i,
+                                           patient_population = patient_population) 
+    
+    # update hospital
+    current_hospital <- update_res$hospital
+    
+    # store the discharges
+    all_discharges[[i]] <- update_res$discharges
+    
+    # compute statistics for the current state of the hospital
+    add_stats <- current_hospital %>% 
+      summarise(mean_age=mean(age,na.rm=TRUE),
+                mean_los=mean(care_days,na.rm=TRUE)) %>% 
+      mutate(date=start_date+i)
+    
+    daily_stats <- bind_rows(daily_stats,add_stats)
+    
+  }
+  
+  # return the following
+  # The dataset of all patients that passed through the simulation
+  # Statistics across days in the simulation for the state of the hospital
+  list(discharges=all_discharges,
+       final_hospital=current_hospital,
+       daily_stats=daily_stats)
+  
+}
+```
+
 ### Hospital over/under capacity
 
 The way we have setup the simulator, the hospital is always at full
@@ -436,3 +739,60 @@ capacity and we immediately draw a new patient for each patient that is
 discharged. Consider making number number of new arrivals stochastic in
 some way. For example, you might draw new patients using a poisson
 distribution where the mean is set to the number of patients discharged.
+
+POSSIBLE SOLUTION
+
+To do this, when we compute the number of patients discharged in the
+`discharge_admit_patients()` function we should draw the number of new
+patients from some random value that is around this value. One option is
+to add or subtract a random value from the number discharged. Another
+approach would be to draw from something like a Poisson distribution
+with the mean set to the number of discharges. This would have the
+effect, on average, of drawing the same number of admissions as the
+number discharged. However, sometimes slightly fewer would be admitted,
+sometimes slightly more, and occasionally quite a few more would be
+admitted (e.g., surge in patient demand).
+
+Here is how to draw 1 random value from the poisson distribution with
+mean 10.
+
+``` r
+rpois(1,10)
+```
+
+    ## [1] 8
+
+And here we incorporate the poisson process into the
+`discharge_admit_patient()` function:
+
+``` r
+discharge_admit_patients <- function(hospital,date, patient_population = nhds_reduced){
+  
+  # patients_who are discharged
+  discharges <- hospital %>% 
+    filter(disdate<=date)
+  
+  # remove patients whose stay has ended 
+  new_hospital <- hospital %>% 
+    filter(disdate>date)
+  
+  # compute the number discharged
+  num_discharged <- nrow(hospital)-nrow(new_hospital)
+  # update for random draw
+  num_to_admit <- rpois(1,num_discharged)
+  
+  # draw new admissions and add admission & discharge date
+  new_patients <- draw_patients(num_to_admit, 
+                                patient_population = patient_population,
+                                adm_month = lubridate::month(date)) %>% 
+    mutate(admdate=date,
+           disdate=date+care_days)
+  
+  # rebuild hospital
+  new_hospital <- bind_rows(new_hospital,new_patients)
+  
+  return(list(hospital=new_hospital,
+              discharges=discharges))
+  
+}
+```
