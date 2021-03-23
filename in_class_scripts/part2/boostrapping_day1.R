@@ -30,9 +30,9 @@ or2$measure
 
 ## bootstrap ci ----------------------------------------------------------------
 
-# Construct datasets to draw from
-aspirin_group 
-placebo_group 
+# Construct datasets to draw from (ami and no ami)
+aspirin_group <- rep(c("AMI","NO AMI"), times = c(dat[2,2],dat[2,1]))
+placebo_group <- rep(c(TRUE,FALSE), times = c(dat[1,2],dat[1,1]))
 
 
 # write function to sample heart attacks for the two groups then compute the 
@@ -40,8 +40,16 @@ placebo_group
 boot_aspirin <- function(){
   
   # sample groups
+  aspirin_sample <- sample(aspirin_group, 
+                           size = length(aspirin_group),
+                           replace = TRUE)
+  
+  placebo_sample <- sample(placebo_group, 
+                           size = length(placebo_group),
+                           replace = TRUE)
  
   # compute
+  (sum(aspirin_sample==TRUE)/sum(aspirin_sample==FALSE))/(sum(placebo_sample==TRUE)/sum(placebo_sample==FALSE))
   
 }
 
@@ -52,9 +60,10 @@ boot_sample <- replicate(1000,boot_aspirin())
 #boot_sample <- sapply(1:1000,function(x) boot_aspirin())
 
 # compute CI bounds
+quantile(boot_sample,probs = c(0.025,0.975))
 
 # compare to the original odds ratio
-
+or2$measure
 
 
 ##########################################
@@ -84,26 +93,28 @@ cor(cholostyramine$compliance,cholostyramine$cholesterol.decrease)
 # write a function to manually create a bootstrap and calculate correlation
 boot_cor <- function(){
   # draw resample index values
-  
+  indices <- sample(nrow(cholostyramine),replace = TRUE)
   # subsample data
-  
+  boot_sample <- cholostyramine[indices,]
   # compute correlation
+  cor(boot_sample$compliance,boot_sample$cholesterol.decrease)
 }
 
 boot_cor()
 
-boot_sample <- replicate(1000,boot_cor())
+boot_cholostyramine <- replicate(1000,boot_cor())
 
-quantile(boot_sample,probs = c(0.025,0.975))
+quantile(boot_cholostyramine,probs = c(0.025,0.975))
 
 
 ## Using Boot Package ----------------------------------------------------------
 
 compute_cor <- function(data, indices) {
-  sample <- data[indices,]
-  cor(sample$compliance,sample$cholesterol.decrease)
+  boot_sample <- data[indices,]
+  cor(boot_sample$compliance,boot_sample$cholesterol.decrease)
 }
 
+# generate output for bootstrapped samples
 boot_out <- boot(
   cholostyramine,
   R = 1000,
@@ -187,9 +198,14 @@ boot_t_out <- boot(iter = 200,
                    data = cholostyramine, 
                    statistic = compute_cor_var)
 
-boot_t_out
+tmp <- quantile((boot_t_out$t[,1]-boot_t_out$t0[1])/sqrt(boot_t_out$t[,2]), 
+                probs=c(0.975,0.025),type = 6)
 
-boot.ci(boot_t_out,type = "stud")
+boot_t_out$t0[1]-sqrt(boot_t_out$t0[2])*tmp
+
+boot.ci(boot_t_out, type = "stud")
+
+
 
 
 ##########################
@@ -203,6 +219,8 @@ cholostyramine %>%
   ggplot(aes(compliance,cholesterol.decrease)) +
   geom_point() +
   geom_smooth() 
+
+?geom_smooth
 
 # how to fit a loess model
 fit <- loess(cholesterol.decrease~compliance,data = cholostyramine)
