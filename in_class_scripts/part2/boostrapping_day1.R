@@ -100,11 +100,17 @@ boot_cor <- function(){
   cor(boot_sample$compliance,boot_sample$cholesterol.decrease)
 }
 
+# test the function
 boot_cor()
 
+# generate multiple (1,000) replicates of bootstapped correlation values
 boot_cholostyramine <- replicate(1000,boot_cor())
 
+# compute quantiles for CI bounds
 quantile(boot_cholostyramine,probs = c(0.025,0.975))
+
+# should also check to see if the distribution appears symetric
+hist(boot_cholostyramine)
 
 
 ## Using Boot Package ----------------------------------------------------------
