@@ -51,7 +51,7 @@ bind_rows(febrile_episodes,
 #### Simulation to compute power for a given sample size ####
 #############################################################
 
-
+t.test()
 
 
 

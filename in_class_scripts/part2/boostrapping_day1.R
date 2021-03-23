@@ -129,6 +129,10 @@ boot_out <- boot(
 
 boot_out
 
+sd(boot_out$t)
+
+mean(boot_out$t)-boot_out$t0
+
 # all CIs
 boot.ci(boot_out)
 
@@ -160,12 +164,14 @@ boot.ci(boot_out, type = "perc")
 quantile(boot_out$t, probs = c(0.025,0.975))
 quantile(boot_out$t, probs = c(0.025,0.975), type = 6)
 
+?quantile
+
 ## Basic -----------------------------------------------------------------------
 
 boot.ci(boot_out, type = "basic")
 
 cor_est <- boot_out$t0
-bias <- mean(boot_out$t)-boot_out$t0
+
 
 quantile(2*cor_est-boot_out$t, probs = c(0.025,0.975), type = 6)
 round(quantile(2*cor_est-boot_out$t, probs = c(0.025,0.975), type = 6),4)
