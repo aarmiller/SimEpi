@@ -201,9 +201,8 @@ This document provides an outline of the topics, scripts and associated readings
 
     -   Thermometer-based screening
 
-```{=html}
 <!-- -->
-```
+
 -   Data Generation
 
 **Supplementary Readings**
