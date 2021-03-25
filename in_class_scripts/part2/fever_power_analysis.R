@@ -26,7 +26,7 @@ febrile_episodes %>% summary()      # These are normal temperatures
 
 # histogram of febrile episodes
 febrile_episodes %>% 
-  ggplot(aes(tempF)) +
+  ggplot(aes(tempF_new)) +
   geom_histogram() +
   ggtitle("Readings during febrile episodes")
 
@@ -64,19 +64,96 @@ t.test()
 
 ## Start by writing the pseudo code for this problem ---------------------------
 
+tmp_sample_size <- 200
+tmp_frac_fever <- 0.05
+
+## 1) Construct study population - sample() to draw temperatures from febrile 
+##   group and non-febrile, where we draw sample_size*(fraction SSI) from febrile
+##   group and sample_size*(1-fraction SSI) from non_febrile
+
+SSI_cases <- round(tmp_sample_size*tmp_frac_fever)
+
+nonSSI_cases <- tmp_sample_size-SSI_cases
+
+# draw SSIs
+SSI_patients <- sample(febrile_episodes$tempF_new, 
+                       size = SSI_cases,
+                       replace = TRUE)
+
+# draw non SSIs
+nonSSI_patients <- sample(non_febrile_episodes$tempF, 
+                          size = nonSSI_cases,
+                          replace = TRUE)
+
+
+## 2) Compare mean difference between the two study groups - use the function
+##    t.test() to give us this value
+?t.test()
+SSI_patients
+nonSSI_patients
+
+tmp_dat <- bind_rows(tibble(temp = SSI_patients,
+                 SSI = 1L),
+          tibble(temp = nonSSI_patients,
+                 SSI = 0L))
+
+
+tmp_res <- t.test(temp ~ SSI, data = tmp_dat)
+
+
+## 3) Return the test statistic (in some form) - p-value (could also keep track 
+##    of means for other purposes)
+
+tmp_res$p.value
+
+tmp_res$estimate
 
 
 ## Write the simulation function -----------------------------------------------
 
 sample_sim <- function(sample_size, frac_fever = 0.05){
   
+  # compute sample sizes
+  SSI_cases <- round(sample_size*frac_fever)
+  nonSSI_cases <- sample_size-SSI_cases
+  
+  # draw SSIs
+  SSI_patients <- sample(febrile_episodes$tempF_new, 
+                         size = SSI_cases,
+                         replace = TRUE)
+  # draw non SSIs
+  nonSSI_patients <- sample(non_febrile_episodes$tempF, 
+                            size = nonSSI_cases,
+                            replace = TRUE)
+  
+  # assemble data
+  tmp_dat <- bind_rows(tibble(temp = SSI_patients,
+                              SSI = 1L),
+                       tibble(temp = nonSSI_patients,
+                              SSI = 0L))
+  
+  # run test
+  tmp_res <- t.test(temp ~ SSI, data = tmp_dat)
+  
+  # output results
+  c(tmp_res$p.value,tmp_res$estimate)
+  
+  
 }
 
 
+sample_sim(200)[1]<0.05
+
+sum(map_lgl(1:100, ~sample_sim(200)[1]<0.05))/trials
+
 ## Write the simulation for multiple trials ------------------------------------
 
-multi_sim <- function(sample_size,frac_fever=.1,trials=100){
+multi_sim <- function(sample_size,frac_fever=.1,trials=100,alpha = 0.05){
 
+  # repeat sample_sim
+  sum(map_lgl(1:trials, ~sample_sim(sample_size)[1]<0.05))/trials
+  # calculate power - (count # sig p-value)/trials
+  
   }
 
 
