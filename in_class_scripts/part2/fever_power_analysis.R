@@ -51,11 +51,37 @@ bind_rows(febrile_episodes,
 #### Simulation to compute power for a given sample size ####
 #############################################################
 
+# Assume we want to conduct a power analysis for a study in which we believe 5%
+# of surgeries will result in a SSI.
+
+# We will assume for this simulation that we will be comparing individuals after
+# we have determined who has and has not had a SSI
+
+# Assume we will use a t test to compare differences (just for simplicity)
+
 t.test()
 
 
+## Start by writing the pseudo code for this problem ---------------------------
+
+
+
+## Write the simulation function -----------------------------------------------
+
+sample_sim <- function(sample_size, frac_fever = 0.05){
+  
+}
+
+
+## Write the simulation for multiple trials ------------------------------------
+
+multi_sim <- function(sample_size,frac_fever=.1,trials=100){
+
+  }
 
 
 ###############################################
 #### Iteration over different sample sizes ####
 ###############################################
+
+## Write a function to iterate over multiple sample sizes ----------------------
