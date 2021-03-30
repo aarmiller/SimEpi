@@ -142,9 +142,9 @@ sample_sim <- function(sample_size, frac_fever = 0.05){
 }
 
 
-sample_sim(200)[1]<0.05
+sample_sim(200)
 
-sum(map_lgl(1:100, ~sample_sim(200)[1]<0.05))/trials
+sum(map_lgl(1:100, ~sample_sim(200)[1]<0.05))/200
 
 ## Write the simulation for multiple trials ------------------------------------
 
@@ -154,7 +154,10 @@ multi_sim <- function(sample_size,frac_fever=.1,trials=100,alpha = 0.05){
   sum(map_lgl(1:trials, ~sample_sim(sample_size)[1]<0.05))/trials
   # calculate power - (count # sig p-value)/trials
   
-  }
+}
+
+
+multi_sim(sample_size = 200, frac_fever = 0.05, trials = 100)
 
 
 ###############################################
@@ -162,3 +165,21 @@ multi_sim <- function(sample_size,frac_fever=.1,trials=100,alpha = 0.05){
 ###############################################
 
 ## Write a function to iterate over multiple sample sizes ----------------------
+
+sim_sample_sizes <- function(sample_sizes,frac_fever = 0.05, trials = 100){
+  tibble(sample_size = sample_sizes) %>% 
+    mutate(power = map_dbl(sample_size, ~multi_sim(sample_size = ., 
+                                               frac_fever = frac_fever, 
+                                               trials = trials)))
+}
+
+power_vals <- sim_sample_sizes(seq(from=50, to=310, by = 20), 
+                               frac_fever = 0.05,
+                               trials = 500)
+
+# plot power results
+
+power_vals %>% 
+  ggplot(aes(sample_size,power)) +
+  geom_line() +
+  geom_hline(aes(yintercept = 0.8), color = "red", linetype = 2)
