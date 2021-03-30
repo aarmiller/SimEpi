@@ -5,7 +5,7 @@
 ############################################################
 
 # Note: You answers may differ quite a bit...this is just one example of how
-#       to approache the problem
+#       to approach the problem
 rm(list=ls())
 library(tidyverse)
 
@@ -110,7 +110,8 @@ allocate_vaccine_pop <- function(data,n){
 # test function
 county_data %>% 
   initialize_counties() %>% 
-  allocate_vaccine_pop(5000)
+  allocate_vaccine_pop(5000) %>% 
+  glimpse()
 
 
 ## Distribution Function -------------------------------------------------------
@@ -302,7 +303,7 @@ allocate_vaccine_equal <- function(data,n){
 allocate_vaccine_case_history <- function(data,n,frac_identified = .25){
   
   out <- data %>% 
-    mutate(covid_cases = covid_cases/0.25,
+    mutate(covid_cases = covid_cases/frac_identified,
            pop_immune = total_population-covid_cases,
            immune_pct = pop_immune/sum(pop_immune)) %>% 
     mutate(allocation=round(n*immune_pct))
