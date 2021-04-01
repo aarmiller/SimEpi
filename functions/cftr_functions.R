@@ -52,8 +52,6 @@ compute_odds_ratios2 <- function(data){
   
 }
 
-temp_func
-
 # Get paired odds ratios using conditional logistic regression...this function 
 # computes the paired odds ratio using conditional logistic regression to account
 # for stratification from matching...note the details of this model/function are 
