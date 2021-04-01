@@ -123,3 +123,20 @@ confint(iv_fit)
 ## treatment effect using a standard regression model, finally generate the 
 ## Estimate using the 2SLS estimation approach.
 
+## Write simulation function to perform bootstrapping --------------------------
+
+
+
+## Perform 1000 bootstrap trials for the following values of n -----------------
+
+
+## n = 100 ---------------------------------------------------------------------
+
+
+
+## n = 1000 --------------------------------------------------------------------
+
+
+
+## n = 10000 -------------------------------------------------------------------
+
