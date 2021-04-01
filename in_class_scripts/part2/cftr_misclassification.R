@@ -37,6 +37,8 @@ non_carriers
 non_carriers %>% 
   unnest()
 
+carrier_strata_sizes
+
 #################################
 #### Define study parameters ####
 #################################
@@ -120,6 +122,27 @@ draw_null_cohort <- function(mis_number = 0){
 
 
 ## Start by writing pseudo code and individual steps ---------------------------
+
+# mis_number = 58
+
+# 1) Draw 58 misclassified patients from those with CF (from strata in the the 
+#    original population) - Identify which strata from
+
+# 2) Draw the remaining cases from non-carriers (null assumption)
+
+
+# 3) Draw the matched controls for each strata from non-carriers also
+
+
+# 4) Compute statistics and store results
+
+# 5) Repeat (10,000)
+
+# 6) Analyze results in comparison to the original study design (misclassification - 
+#    how often are results similar or more extreme; FD - how often do you get a 
+#    significant result)
+
+
 
 
 
