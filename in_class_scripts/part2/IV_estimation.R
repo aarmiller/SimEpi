@@ -40,12 +40,12 @@ library(MASS)
 # Study Sample size
 n <- 1000
 
-# Next, describe the mean for x1 and x2 and the correlation matrix between x1 
+# Next, describe the mean for x1_star and x2 and the correlation matrix between x1 
 # and x2
 var_means <- c(30,20)
 cov_matrix <- matrix(c(1, 0.6, 0.6, 1), 2, 2)
 
-# Next generate random nomal correlated variables for x1_star and x2
+# Next generate random normal correlated variables for x1_star and x2
 tmp <- mvrnorm(n = n, mu = var_means, Sigma = cov_matrix)
 x1_star <- tmp[, 1]
 x2 <- tmp[, 2]
@@ -66,7 +66,7 @@ cor(x2, z)
 cor(x1, z)
 
 # Finally, we can generate the outcome variable of interest
-y <- 2 + x1 + x2 + rnorm(n)
+y <- 2 + 1*x1 + 1*x2 + rnorm(n)
 
 
 ## estimate the full model -----------------------------------------------------
@@ -76,7 +76,7 @@ summary(fit_true)
 confint(fit_true)
 
 
-# Estimate what we would get if c was unobserved
+# Estimate what we would get if x2 was unobserved
 fit_observed <- lm(y ~ x1)
 
 summary(fit_observed)
@@ -90,6 +90,8 @@ confint(fit_observed)
 ## Manually perform 2SLS -------------------------------------------------------
 
 stage1_fit <- lm(x1 ~ z)
+
+stage1_fit$fitted.values
 
 stage2_fit <- lm(y ~ stage1_fit$fitted.values)
 
@@ -109,21 +111,26 @@ iv_fit <- ivreg(y ~ x1 | z)
 summary(iv_fit)
 confint(iv_fit)
 
-####################################
-#### Bootstrap to Estimate Bias ####
-####################################
+##############################################
+#### Repeatedly Evaluate to Estimate Bias ####
+##############################################
 
 ## The above provided one example to demonstrate the problem with an endogenous
 ## regressor
 
-## Use bootstrapping to estimate the bias in the standard OLS estimate and show
+## Use simulation to estimate the bias in the standard OLS estimate and show
 ## the consistency in the 2SLS IV estimator
 
 ## Write a function to generate a dataset with endogeneity, then estimate the
 ## treatment effect using a standard regression model, finally generate the 
 ## Estimate using the 2SLS estimation approach.
 
-## Write simulation function to perform bootstrapping --------------------------
+## Write simulation function to perform evaluation -----------------------------
+
+# This function should perform the above procedures and return the coefficient
+# estimate of interest from the OLS model (lm) and from the TSLS model. So the 
+# output of the function should be two coefficient estimates. Make your function
+# work so that it can take as an argument the sample size n.
 
 
 

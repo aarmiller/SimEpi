@@ -144,6 +144,12 @@ sample_sim <- function(sample_size, frac_fever = 0.05){
 
 sample_sim(200)
 
+sample_sim(200)[1]<0.05
+
+map_lgl(1:100, ~sample_sim(200)[1]<0.05)
+
+sum(map_lgl(1:100, ~sample_sim(200)[1]<0.05))
+
 sum(map_lgl(1:100, ~sample_sim(200)[1]<0.05))/200
 
 ## Write the simulation for multiple trials ------------------------------------
