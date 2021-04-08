@@ -26,7 +26,7 @@ library(tidyverse)
 #############################
 
 # parameters for simulation
-reps <- 100 #The number of simulations
+reps <- 10000 #The number of simulations
 n <- 1000     #Sample size within each simulation
 
 # a results dataset where the authors hold results of simulation
@@ -40,7 +40,7 @@ results <- data.frame(
   stringsAsFactors = FALSE
 )
 
-## set initial seet
+## set initial seed
 set.seed(r)
 
 #Create 2 continuous confounders (M1 and M2)
@@ -88,7 +88,7 @@ results$delta4 <- summary(glm(y ~ a.err + m1.indep + m2, family=gaussian(link="i
 #Scenario 5: Linear model under NDM of exposure and confounder, with dependent errors
 results$delta5 <- summary(glm(y ~ a.err + m1.dep + m2, family=gaussian(link="identity")))$coefficients[2]
 
-
+results
 
 ##############################
 #### ORIGINAL GITHUB CODE ####

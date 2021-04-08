@@ -31,7 +31,7 @@ or2$measure
 ## bootstrap ci ----------------------------------------------------------------
 
 # Construct datasets to draw from (ami and no ami)
-aspirin_group <- rep(c("AMI","NO AMI"), times = c(dat[2,2],dat[2,1]))
+aspirin_group <- rep(c(TRUE,FALSE), times = c(dat[2,2],dat[2,1]))
 placebo_group <- rep(c(TRUE,FALSE), times = c(dat[1,2],dat[1,1]))
 
 
