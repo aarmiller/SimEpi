@@ -52,7 +52,7 @@ reg_pred <- reg_data %>%
          resid = los - pred)
 
 # another approach using broom package
-broom::augment(reg_fit,reg_data)
+broom::augment(reg_fit, new_data = reg_data)
 
 # compute performance metrics (note: here these are on the training data)
 reg_pred %>% 
@@ -80,15 +80,15 @@ class_pred <- class_data %>%
 # notice what is being calculated
 class_pred %>% 
   #mutate(pred2 = 1/(1+exp(-pred_link))) %>% 
-  mutate(pred_died = pred_resp>0.5) %>% 
+  mutate(pred_died = pred_resp>0.05) %>% 
   count(pred_died)
 
 # plot ROC curve
 library(pROC) # the pROC package makes this easier
 
-roc(pred_class$died,pred_class$pred_resp) # return AUC value
+roc(class_pred$died,class_pred$pred_resp) # return AUC value
 
-plot.roc(pred_class$died,pred_class$pred_resp) # plot ROC curve
+plot.roc(class_pred$died,class_pred$pred_resp) # plot ROC curve
 
 
 ###################################################
@@ -138,7 +138,7 @@ boot_index <- sample(nrow(reg_data),replace = TRUE)
 train <- reg_data[boot_index,]
 
 # boot test test set
-test <- reg_data[boot_index,]
+test <- reg_data[-boot_index,]
 
 reg_fit <- lm(los ~ ., data = train)
 
@@ -155,7 +155,7 @@ boot_predictions <- function(){
   train <- reg_data[boot_index,]
   
   # boot test test set
-  test <- reg_data[boot_index,]
+  test <- reg_data[-boot_index,]
   
   reg_fit <- lm(los ~ ., data = train)
   
@@ -175,7 +175,7 @@ tibble(rep = 1:10) %>%
 
 # Create folds
 k <- 5
-fold_index <- sample(rep(1:5, length = nrow(reg_data)))
+fold_index <- sample(rep(1:k, length = nrow(reg_data)))
 
 # see which rows belong to a particulat index
 which(fold_index==1)
@@ -197,7 +197,7 @@ folds <- tibble(fold = 1:k) %>%
 folds <- folds %>% 
   mutate(fit = map(train, ~lm(los~. , data = .))) 
 
-folds$fit[[1]]
+folds$fit[[2]]
 
 # add predictions
 folds <- folds %>% 
@@ -311,7 +311,7 @@ crossv_loo(mtcars)
 #############################
 #### Using Caret Package ####
 #############################
-
+rm(list = ls())
 library(caret)
 
 ## Setup Evaluation Criteria ---------------------------------------------------
@@ -321,7 +321,7 @@ eval_ctrl <- trainControl(method = "repeatedcv",    # select evaluation method
                           repeats = 10,             # number of repetitions
                           savePredictions = TRUE)   # store predictions in output
 
-set.seed(5678)
+set.seed(1)
 model_lm <- train(los ~ .,                          # specify your model
                   data = reg_data,                  # data to use
                   method = "lm",                    # specify method to use
@@ -339,7 +339,7 @@ model_lm$results
 # results across folds & repetitions
 model_lm$resample
 
-model_lm$pred
+model_lm$pred %>% as_data_frame()
 
 # RMSE across all predictions in all holdout folds
 RMSE(pred = model_lm$pred$pred,
@@ -349,11 +349,14 @@ RMSE(pred = model_lm$pred$pred,
 model_lm$pred %>% 
   as_data_frame() %>% 
   group_by(Resample) %>% 
-  summarise(rmse = RMSE(pred,obs))
+  summarise(rmse = RMSE(pred,obs)) %>% 
+  summarise(mean(rmse))
 
 # for the in sample fits
 
 summary(model_lm$finalModel)
+
+lm(los~., data = reg_data)
 
 
 

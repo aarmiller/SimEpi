@@ -1,8 +1,8 @@
 
 
 rm(list=ls())
+#library(MASS)
 library(tidyverse)
-library(MASS)
 
 
 ########################
@@ -46,7 +46,7 @@ var_means <- c(30,20)
 cov_matrix <- matrix(c(1, 0.6, 0.6, 1), 2, 2)
 
 # Next generate random normal correlated variables for x1_star and x2
-tmp <- mvrnorm(n = n, mu = var_means, Sigma = cov_matrix)
+tmp <- MASS::mvrnorm(n = n, mu = var_means, Sigma = cov_matrix)
 x1_star <- tmp[, 1]
 x2 <- tmp[, 2]
 
@@ -82,6 +82,9 @@ fit_observed <- lm(y ~ x1)
 summary(fit_observed)
 confint(fit_observed)
 
+fit_observed$coefficients[2]
+bias <- fit_observed$coefficients[2] - 1
+
 
 #########################
 #### 2SLS Estimation ####
@@ -91,6 +94,7 @@ confint(fit_observed)
 
 stage1_fit <- lm(x1 ~ z)
 
+# pull out first stage predictions
 stage1_fit$fitted.values
 
 stage2_fit <- lm(y ~ stage1_fit$fitted.values)
@@ -98,6 +102,8 @@ stage2_fit <- lm(y ~ stage1_fit$fitted.values)
 summary(stage2_fit)
 
 confint(stage2_fit)
+
+tsls_bias <- stage2_fit$coefficients[2] - 1
 
 # Note: The parameter estimates will be correct by doing this manually, however
 # the errors will not be
@@ -110,6 +116,8 @@ iv_fit <- ivreg(y ~ x1 | z)
 
 summary(iv_fit)
 confint(iv_fit)
+
+iv_fit$coefficients[2]-1
 
 ##############################################
 #### Repeatedly Evaluate to Estimate Bias ####
