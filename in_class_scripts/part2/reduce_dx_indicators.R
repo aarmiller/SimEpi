@@ -1,5 +1,5 @@
 
-
+rm(list = ls())
 load("R/SimEpi/example_data/nhds_adult.RData")
 
 nhds_adult %>% count(dx01)
