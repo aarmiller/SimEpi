@@ -20,16 +20,33 @@ n_days <- 100              # Number of days to run simulation
 ## Build Patients --------------------------------------------------------------
 
 # Write a function that builds a set of agents for the simulator
+
 build_patients <- function(){
   }
 
 ## Make Interactions -----------------------------------------------------------
+
+# Write a function that makes the patients interact with one another
+
 make_interactions <- function(){ 
   }
 
+## Draw Transmission Events ----------------------------------------------------
+
+# Write a function that determines which infections occur (when infected and 
+# susceptible agents interact)
+
+draw_transmissions <- function(){
+  
+  }
+
 ## Update States ---------------------------------------------------------------
+
+# Write a function that updates the states of all the agents in the simulator
+# when we reach the end of a timestep
 update_states <- function(){
-}
+  
+  }
 
 
 ############################################
