@@ -44,6 +44,7 @@ draw_transmissions <- function(){
 
 # Write a function that updates the states of all the agents in the simulator
 # when we reach the end of a timestep
+
 update_states <- function(){
   
   }
@@ -53,7 +54,9 @@ update_states <- function(){
 #### Main Simulation Procedure Function ####
 ############################################
 
+## Build Simulator -------------------------------------------------------------
 
+# Combine each of the previous functions to run through a simulation
 
 patients <- build_patients()
 
@@ -65,4 +68,27 @@ for (i in 1:100) {
   
   update_states()
   
-}
+  }
+
+## Build Simulation Functions --------------------------------------------------
+
+
+
+
+# Write a function that incorporates the above steps to run through a single 
+# trial of the simulation.
+
+# Consider an intermediate function that computes statistics of interest at each
+# stage of the simulation, then aggregate this into an output object
+
+run_single_sim <- function(){
+  
+  }
+
+
+# Write final simulation function that allows for multiple trials (later you may
+# want to rewrite this to run in parallel)
+
+run_sim <- function(trials = 100){
+  
+  }
