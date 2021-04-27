@@ -8,7 +8,7 @@ library(tidyverse)
 
 # Define parameter values for simulation
 
-n_agents <- 1000           # Number of agents (patients) to simulate
+n_agents <- 1000           # Number of agents (patients or HCWs) to simulate
 n_days <- 100              # Number of days to run simulation
 
 
