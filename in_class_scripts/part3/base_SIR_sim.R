@@ -1,5 +1,5 @@
 
-rm(list=ls())
+rm(list=ls()) 
 library(tidyverse)
 
 ###############################
@@ -35,6 +35,7 @@ diag(cm) <- 0
 # make symettric
 cm[lower.tri(cm)] <- t(cm)[lower.tri(cm)]
 
+# test that the matrix is symetric
 cm[1:3,1:3]
 
 ########################################
@@ -63,9 +64,26 @@ build_patients()
 
 build_patients() %>% filter(state=="I")
 
+## Helper function -------------------------------------------------------------
+
+# Write a function that flips a weighted coin for a vector of probability
+# values where the probability values reflect the weight
+
+# flip a weighted coin with 10% probability of true
+runif(1) < 0.1
+
+# we want to do the same thing with a vector of different probability values
+
+
+flip_coin <- function(probs){
+  
+}
+
+
 ## Make Interactions -----------------------------------------------------------
 
-# Write a function that makes the patients interact with one another
+# Write a function that makes the patients interact with one another and 
+# determines what transmission occurred
 
 make_interactions <- function(){ 
   
@@ -79,18 +97,12 @@ make_interactions <- function(){
   
   ####### draw contact with probability cm[i,j]
   
-  ####### if this contact is drawn then update trans_indicator or trans_vector
+  ####### if this contact is drawn then determine if transmission occurs and 
+  ####### update trans_ind to reflect transmission
   
   }
 
-## Draw Transmission Events ----------------------------------------------------
 
-# Write a function that determines which infections occur (when infected and 
-# susceptible agents interact)
-
-draw_transmissions <- function(){
-  
-  }
 
 ## Update States ---------------------------------------------------------------
 
@@ -115,8 +127,6 @@ patients <- build_patients()
 for (i in 1:n_days) {
   
   make_interactions()
-  
-  draw_transmissions()
   
   update_states()
   
