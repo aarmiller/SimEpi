@@ -35,7 +35,7 @@ diag(cm) <- 0
 # make symettric
 cm[lower.tri(cm)] <- t(cm)[lower.tri(cm)]
 
-# test that the matrix is symetric
+# test that the matrix is symmetric
 cm[1:3,1:3]
 
 ########################################
@@ -74,10 +74,16 @@ runif(1) < 0.1
 
 # we want to do the same thing with a vector of different probability values
 
+c(0.1,0.3,0.5,0.6,0.9)
+
+as.logical(rbinom(5,1,c(0.1,0.3,0.5,0.6,0.9)))
 
 flip_coin <- function(probs){
-  
+  #as.logical(rbinom(length(probs),1,probs))
+  runif(length(probs))<probs
 }
+
+flip_coin(c(0.1,0.3,0.5,0.6,0.9))
 
 
 ## Make Interactions -----------------------------------------------------------
@@ -85,22 +91,87 @@ flip_coin <- function(probs){
 # Write a function that makes the patients interact with one another and 
 # determines what transmission occurred
 
-make_interactions <- function(){ 
+# implementation from class
+make_interactions <- function(data){ 
   
   # Loop over agents
   
   # How to do this efficiently?
   
-  # for each agent i
+  # for each agent i (who is infectious)
   
-  #### for each agent j != i
+  # find infectious agents
+  infectious <- data %>% 
+    filter(state == "I")
   
-  ####### draw contact with probability cm[i,j]
+  # create transmission vector placeholder
+  trans_vec <- rep(FALSE, nrow(data))
   
-  ####### if this contact is drawn then determine if transmission occurs and 
-  ####### update trans_ind to reflect transmission
-  
+  # looping over infectious agents
+  for (i in 1:nrow(infectious)){
+   
+    #### for each agent j != i
+    
+    ####### draw contact with probability cm[i,j]
+    
+    ####### if this contact is drawn then determine if transmission occurs and 
+    ####### update trans_ind to reflect transmission
+    
+    agent_index <- infectious$agent[i]
+    
+    # susceptibility of j * infectivity of i * contact probability 
+    trans_prob <- data$susceptibility * infectious$transmisibility[i] * cm[agent_index,]
+    
+    # flip to determine transmissions
+    tmp_trans_vec <- flip_coin(trans_prob)
+    
+    # add to our overall transmission vector
+    trans_vec <- (trans_vec + tmp_trans_vec)>0
   }
+  
+  # add transmission indicator into data
+  data %>% 
+    mutate(trans_ind = trans_vec)
+  
+}
+
+
+# a better implementation
+make_interactions <- function(data){ 
+  
+  # Loop over agents
+  
+  # find infectious agents
+  infectious_index <- which(data$state == "I")
+  
+  # create transmission vector placeholder
+  trans_vec <- rep(FALSE, nrow(data))
+  
+  # looping over just infectious agents
+  for (i in infectious_index){
+    
+    #### for each agent j != i
+    
+    # susceptibility of j * infectivity of i * contact probability 
+    trans_prob <- data$susceptibility * data$transmisibility[i] * cm[i,]
+    
+    # flip coin to determine transmissions
+    tmp_trans_vec <- flip_coin(trans_prob)
+    
+    # add to our overall transmission vector
+    trans_vec <- (trans_vec + tmp_trans_vec)>0
+  }
+  
+  # add transmission indicator into data
+  data %>% 
+    mutate(trans_ind = trans_vec)
+  
+}
+
+build_patients() %>% 
+  make_interactions() %>% 
+  filter(trans_ind==TRUE)
+
 
 
 
@@ -109,9 +180,46 @@ make_interactions <- function(){
 # Write a function that updates the states of all the agents in the simulator
 # when we reach the end of a timestep
 
-update_states <- function(){
+update_states <- function(data){
   
-  }
+  # Update the the time step
+  # Update the state from I to R if they hit the duration threshold
+  out <- data %>% 
+    mutate(time = time + 1L) %>% 
+    mutate(state = ifelse(state == "I" & days_infected > duration, "R", state))
+  
+  # add in the new infections from the trans_ind
+  out <- out  %>% 
+    mutate(state = ifelse(trans_ind==TRUE & state == "S", "I", state))
+  
+  # update the number of days infected
+  out <- out  %>% 
+    mutate(days_infected = ifelse(state == "I", days_infected+1L, 0L))
+  
+  return(out)
+}
+
+
+build_patients() %>% 
+  make_interactions() %>% 
+  update_states() %>% 
+  make_interactions() %>% 
+  update_states() %>% 
+  make_interactions() %>% 
+  update_states() %>% 
+  make_interactions() %>% 
+  update_states() %>% 
+  make_interactions() %>% 
+  update_states() %>%
+  make_interactions() %>% 
+  update_states() %>% 
+  make_interactions() %>% 
+  update_states() %>% 
+  make_interactions() %>% 
+  update_states() %>% 
+  make_interactions() %>% 
+  update_states() %>% 
+  count(state)
 
 
 ############################################
