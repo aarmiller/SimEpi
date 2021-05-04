@@ -36,7 +36,7 @@ diag(cm) <- 0
 cm[lower.tri(cm)] <- t(cm)[lower.tri(cm)]
 
 # test that the matrix is symmetric
-cm[1:3,1:3]
+#cm[1:3,1:3]
 
 ########################################
 #### Simulation Procedure Functions ####
@@ -230,15 +230,40 @@ build_patients() %>%
 
 # Combine each of the previous functions to run through a simulation
 
+# initial patients
 patients <- build_patients()
+
+# keep track of agent state history
+agent_history <- patients %>% 
+  count(state) %>% 
+  mutate(time = 0L)
 
 for (i in 1:n_days) {
   
-  make_interactions()
+  # update patient states
+  patients <- patients %>% 
+    make_interactions() %>% 
+    update_states()
   
-  update_states()
+  # update patient history
+  tmp_agent_history <- patients %>% 
+    count(state) %>% 
+    mutate(time = i)
   
-  }
+  # append patient history
+  agent_history <- rbind(agent_history,tmp_agent_history)
+  
+  # how many infectious
+  n_infectious <- sum(patients$state=="I")
+  
+  # stop simulation if no more infections 
+  if (n_infectious == 0) { break }
+  
+}
+
+agent_history %>% 
+  ggplot(aes(x = time, y = n, color = state)) +
+  geom_line()
 
 ## Build Simulation Functions --------------------------------------------------
 
@@ -253,7 +278,47 @@ for (i in 1:n_days) {
 
 run_single_sim <- function(){
   
+  # initial patients
+  patients <- build_patients()
+  
+  # keep track of agent state history
+  agent_history <- patients %>% 
+    count(state) %>% 
+    mutate(time = 0L)
+  
+  for (i in 1:n_days) {
+    
+    # update patient states
+    patients <- patients %>% 
+      make_interactions() %>% 
+      update_states()
+    
+    # update patient history
+    tmp_agent_history <- patients %>% 
+      count(state) %>% 
+      mutate(time = i)
+    
+    # append patient history
+    agent_history <- rbind(agent_history,tmp_agent_history)
+    
+    # how many infectious
+    n_infectious <- sum(patients$state=="I")
+    
+    # stop simulation if no more infections 
+    if (n_infectious == 0) { break }
+    
   }
+  
+  # return output with final state
+  # return(list(agent_history = agent_history,
+  #             final_state = patients))
+  
+  # return output with just history
+  return(agent_history)
+  
+}
+
+run_single_sim()
 
 
 # Write final simulation function that allows for multiple trials (later you may
@@ -261,4 +326,30 @@ run_single_sim <- function(){
 
 run_sim <- function(trials = 100){
   
-  }
+  tibble(trials = 1:trials) %>% 
+    mutate(results = map(trials, ~run_single_sim())) %>% 
+    unnest(cols = c(results))
+  
+}
+
+
+run_sim(trials = 5)
+
+
+sim_res <- run_sim(trials = 5)
+
+sim_res %>% 
+  ggplot(aes(x = time, y = n, color = state)) +
+  geom_line() +
+  facet_wrap(~trials)
+
+sim_res %>% 
+  group_by(time) %>% 
+  summarise(S = mean(n*(state=="S")),
+            I = mean(n*(state=="I")),
+            R = mean(n*(state=="R"))) %>% 
+  pivot_longer(cols = S:R,
+               names_to = "state",
+               values_to = "n") %>% 
+  ggplot(aes(x = time, y = n, color = state)) +
+  geom_line() 
