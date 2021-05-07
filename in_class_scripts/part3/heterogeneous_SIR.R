@@ -15,6 +15,44 @@ flip_coin <- function(probs){
 
 # flip_coin(c(0.1,0.3,0.5,0.6,0.9)) # example
 
+## Make our contract matrix ----------------------------------------------------
+
+make_cm <- function(agent_types, n_types, contact_probs) {
+  
+  n_agents <- sum(n_types)
+  
+  agents <- rep(agent_types,times = n_types)
+  
+  ## HCW -> HCW ----------------------------------------------------------------
+  
+  cm1 <- matrix(rep(contact_probs[1,1],times = n_types[1]^2),nrow = n_types[1])
+  
+  ## Patients -> Patients --------------------------------------------------------
+  
+  cm2 <- matrix(rep(contact_probs[2,2],times = n_types[2]^2),nrow = n_types[2])
+  
+  ## Patients -> HCWs (0.05) -----------------------------------------------------
+  cm3 <- matrix(rep(contact_probs[2,1],times = n_types[1]*n_types[2]),nrow = n_types[2])
+  
+  # combine submatrices
+  cm <- rbind(cbind(cm1,t(cm3)),
+              cbind(cm3,cm2))
+  
+  # fix diagonal
+  diag(cm) <- 0
+  
+  # optional: make symmetric (if not)
+  
+  # add names
+  row.names(cm) <- agents
+  colnames(cm) <- agents
+  
+  return(cm)
+}
+
+make_cm(agent_types = c("H","P"),
+        n_types = c(5,3))
+
 
 ###############################
 #### Simulation Parameters ####
@@ -22,20 +60,25 @@ flip_coin <- function(probs){
 
 ## Specify a simulation control function for holding parameters ----------------
 
-
-sim_ctrl <- function(n_agents=1000, n_days = 100, susceptibility = .1, infectivity = .65,
-                     duration = 7, init_infect = 2, daily_contacts = 3, contact_prob = NULL){
+sim_ctrl <- function(n_types = c(500,300), agent_types = c("H","P"), n_days = 100, 
+                     susceptibility = c(.05,.15), infectivity = c(.65,.65),
+                     duration = 7, init_infect = 2, contact_probs = NULL){
   
-  # contact prob if using # of daily contacts
-  if (is.null(contact_prob)) {contact_prob <- daily_contacts/n_agents}
+  # if the contact matrix is missing build it
+  if (is.null(contact_probs)) {contact_probs <- matrix(c(0.004,0.005,0.005,0.0005),nrow = 2)}
   
   # constuct contact matrix
-  cm <- matrix(contact_prob,n_agents,n_agents)
-  diag(cm) <- 0                              # make diagonals 0
-  cm[lower.tri(cm)] <- t(cm)[lower.tri(cm)]  # make symetric
+  cm <- make_cm(agent_types = agent_types,
+                n_types = n_types,
+                contact_probs = contact_probs)
+  
+  # compute total agents
+  n_agents <- sum(n_types)
   
   # build output parameter list
   list(n_agents = n_agents,             # Number of agents (patients or HCWs) to simulate
+       agent_types = agent_types,
+       n_types = n_types,
        n_days = n_days,                 # Number of days to run simulation)
        susceptibility = susceptibility, # how susceptible agents are
        infectivity = infectivity,       # how infective agents are that are infected
@@ -44,6 +87,7 @@ sim_ctrl <- function(n_agents=1000, n_days = 100, susceptibility = .1, infectivi
        cm = cm)                         # contact matrix
 }
 
+sim_ctrl(susceptibility = c(0.05,0.25))
 sim_ctrl()
 # sim_ctrl(daily_contacts = 5) # example
 
@@ -60,12 +104,13 @@ build_patients <- function(sim_params = sim_ctrl()){
   infect_index <- sample(sim_params$n_agents, size = sim_params$init_infect)
   
   tibble(agent = 1:sim_params$n_agents,
+         agent_type = rep(sim_params$agent_types, times = sim_params$n_types),
          time = 1L,
          state = ifelse(agent %in% infect_index, "I", "S"),
          days_infected = ifelse(state == "I", 1L, 0L),
          #days_infected = ifelse(state == "I", sample(1:duration,init_infect), 0L),
-         susceptibility = sim_params$susceptibility,
-         transmisibility = sim_params$infectivity,
+         susceptibility = rep(sim_params$susceptibility, times = sim_params$n_types),
+         transmisibility = rep(sim_params$infectivity, times = sim_params$n_types),
          trans_ind = NA)
 }
 
@@ -164,7 +209,7 @@ run_single_sim <- function(sim_params = sim_ctrl(), output_final_state = FALSE){
   
   # keep track of agent state history
   agent_history <- patients %>% 
-    count(state) %>% 
+    count(state, agent_type) %>% # update to count type
     mutate(time = 0L)
   
   for (i in 1:sim_params$n_days) {
@@ -176,7 +221,7 @@ run_single_sim <- function(sim_params = sim_ctrl(), output_final_state = FALSE){
     
     # update patient history
     tmp_agent_history <- patients %>% 
-      count(state) %>% 
+      count(state, agent_type) %>%  # update to count type
       mutate(time = i)
     
     # append patient history
@@ -205,6 +250,13 @@ run_single_sim <- function(sim_params = sim_ctrl(), output_final_state = FALSE){
 }
 
 # run_single_sim(output_final_state = TRUE)
+
+tmp <- run_single_sim(output_final_state = FALSE)
+
+run_single_sim(output_final_state = FALSE) %>% 
+  ggplot(aes(time, n, color = state)) +
+  geom_line() +
+  facet_wrap(~agent_type)
 
 ## Build Multiple Trial Simulation Function ------------------------------------
 
@@ -236,7 +288,7 @@ run_sim_mc <- function(trials = 10, sim_params = sim_ctrl(), cores = 4){
   
   res <- enframe(tmp,name = "trials") %>% 
     unnest(cols = c(value))
- 
+  
   return(res) 
 }
 
@@ -254,13 +306,14 @@ tmp %>%
   pivot_wider(names_from = state, 
               values_from = n,
               values_fill = 0) %>% 
-  group_by(time) %>% 
+  group_by(time,agent_type) %>% 
   summarise_at(vars(I:R), list(mean)) %>% 
   pivot_longer(cols = I:R,
                names_to = "state",
                values_to = "n") %>% 
   ggplot(aes(x = time, y = n, color = state)) +
-  geom_line() 
+  geom_line() +
+  facet_wrap(~agent_type)
 
 
 ## Visualize curves across all simulations -------------------------------------
@@ -268,7 +321,7 @@ tmp %>%
 tmp %>% 
   ggplot(aes(time,n,order = as.factor(trials))) +
   geom_line(alpha = 0.25) +
-  facet_wrap(~state, scale = "free_y")
+  facet_wrap(~agent_type + state, scale = "free_y")
 
 
 # overlay mean
@@ -277,7 +330,7 @@ means_vals <- tmp %>%
   pivot_wider(names_from = state, 
               values_from = n,
               values_fill = 0) %>% 
-  group_by(time) %>% 
+  group_by(time, agent_type) %>% 
   summarise_at(vars(I:R), list(mean)) %>% 
   pivot_longer(cols = I:R,
                names_to = "state",
@@ -289,6 +342,13 @@ tmp %>%
   ggplot(aes(time,n,order = as.factor(trials))) +
   geom_line(alpha = 0.25) +
   geom_line(aes(time,mean_n, color = state), size = 1) +
-  facet_wrap(~state, scale = "free_y") +
+  facet_wrap(~agent_type+state, scale = "free_y") +
   theme_bw()
+
+
+# compute infections by group at end of simulation
+means_vals %>% 
+  filter(time == 100,state == "R") %>% 
+  mutate(group_size = c(500,300)) %>% 
+  mutate(infect_rate=mean_n/group_size)
 
